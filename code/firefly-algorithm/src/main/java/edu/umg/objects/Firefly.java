@@ -1,6 +1,5 @@
 package edu.umg.objects;
 
-import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 
@@ -17,12 +16,6 @@ public class Firefly  {
         for (int i = 0; i < location.length; i++) {
             location[i] = ThreadLocalRandom.current().nextDouble(lowerBound,upperBound);
         }
-    }
-
-    public Firefly(Firefly firefly){
-        this.objectiveFunction = firefly.objectiveFunction;
-
-        this.location = Arrays.copyOf(firefly.location, firefly.location.length);
     }
 
     public Double getLocationAt(int index) {
