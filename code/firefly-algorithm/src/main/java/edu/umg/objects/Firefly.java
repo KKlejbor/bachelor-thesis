@@ -9,7 +9,7 @@ public class Firefly  {
 
     private final Function<Double[], Double> objectiveFunction;
 
-    public Firefly(Function<Double[], Double> objectiveFunction, int numberOfDimensions, Double upperBound, Double lowerBound) {
+    public Firefly(Function<Double[], Double> objectiveFunction, int numberOfDimensions, Double lowerBound, Double upperBound) {
         this.objectiveFunction = objectiveFunction;
 
         location = new Double[numberOfDimensions];
@@ -19,12 +19,18 @@ public class Firefly  {
         }
     }
 
-    public Double[] getLocation() {
-        return location;
+    public Firefly(Firefly firefly){
+        this.objectiveFunction = firefly.objectiveFunction;
+
+        this.location = Arrays.copyOf(firefly.location, firefly.location.length);
+    }
+
+    public Double getLocationAt(int index) {
+        return location[index];
     }
 
     public void setLocation(Double[] location) {
-        this.location = Arrays.copyOf(location, location.length);
+        this.location = location;
     }
 
     public Double getIntensity() {
