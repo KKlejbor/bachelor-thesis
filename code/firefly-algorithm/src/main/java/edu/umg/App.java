@@ -1,5 +1,9 @@
 package edu.umg;
 
+import edu.umg.algorithms.synchronous.FireflyAlgorithm;
+import edu.umg.helpers.RastriginFunction;
+import edu.umg.objects.Firefly;
+
 /**
  * Hello world!
  *
@@ -8,6 +12,13 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        for (int i = 0; i < ; i++) {
+            
+        }
+        FireflyAlgorithm fireflyAlgorithm = new FireflyAlgorithm(1, 0.9, 0.8, 0.98, 90, 1000, new RastriginFunction(), 4, -5.21, 5.21);
+
+        Firefly finalSolution = fireflyAlgorithm.run();
+
+        System.out.printf("Najlepsze rozwiązanie: \n%s\n", finalSolution.toString());
     }
 }
