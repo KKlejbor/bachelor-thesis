@@ -29,4 +29,15 @@ public class Firefly  {
     public Double getIntensity() {
         return objectiveFunction.apply(location);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder("f(");
+
+        for (int i = 0; i < location.length - 1; i++) {
+            stringBuilder.append(String.format("%.2f, ",location[i]));
+        }
+
+        return stringBuilder.append(location[location.length - 1]).append(") = ").append(String.format("%.2f",getIntensity())).toString();
+    }
 }
