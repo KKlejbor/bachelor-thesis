@@ -1,4 +1,4 @@
-package org.example;
+package edu.umg;
 
 /**
  * Hello world!
