@@ -108,6 +108,14 @@ public class FireflyAlgorithm {
 
         for (int i = 0; i < numberOfDimensions; i++) {
             newLocation[i] = population[index1].getLocationAt(i) + attractiveness * (population[index2].getLocationAt(i) - population[index1].getLocationAt(i)) + computeRandomStep();
+
+            if(newLocation[i] < lowerBound){
+                newLocation[i] = lowerBound;
+            }
+
+            if(newLocation[i] > upperBound){
+                newLocation[i] = upperBound;
+            }
         }
 
         return newLocation;
@@ -122,6 +130,14 @@ public class FireflyAlgorithm {
 
         for (int i = 0; i < numberOfDimensions; i++) {
             newLocation[i] = population[locationOfTheBestSolution].getLocationAt(i) + computeRandomStep();
+
+            if(newLocation[i] < lowerBound){
+                newLocation[i] = lowerBound;
+            }
+
+            if(newLocation[i] > upperBound){
+                newLocation[i] = upperBound;
+            }
         }
 
         return newLocation;
