@@ -35,9 +35,9 @@ public class Firefly  {
         StringBuilder stringBuilder = new StringBuilder("f(");
 
         for (int i = 0; i < location.length - 1; i++) {
-            stringBuilder.append(String.format("%.2f, ",location[i]));
+            stringBuilder.append(String.format("%.5f, ",location[i]));
         }
 
-        return stringBuilder.append(location[location.length - 1]).append(") = ").append(String.format("%.2f",getIntensity())).toString();
+        return stringBuilder.append(String.format("%.5f",location[location.length - 1])).append(") = ").append(String.format("%.5f",getIntensity())).toString();
     }
 }
