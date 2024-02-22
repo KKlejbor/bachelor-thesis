@@ -1,5 +1,5 @@
 name: LaTeX Build
-on: pull_request
+on: [pull_request, push]
 env:
     path_to_document: 'latex/main.tex'
 jobs:
