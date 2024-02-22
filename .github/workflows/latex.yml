@@ -1,0 +1,22 @@
+name: LaTeX Build
+on: pull_request
+env:
+    path_to_document: 'latex/main.tex'
+jobs:
+    build:
+        name: Build LaTeX Document
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4.1.1
+            - name: Github Action for LaTeX
+              uses: xu-cheng/latex-action@3.1.0
+              with:
+                root_file: ${{env.path_to_document}}
+            - name: Upload PDF file
+              uses: actions/upload-artifact@v3
+              with:
+                  name: PDF
+                  path: main.pdf
+          
+
