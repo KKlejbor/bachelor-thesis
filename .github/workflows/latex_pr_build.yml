@@ -1,4 +1,4 @@
-name: LaTeX Build
+name: Build
 on: 
   pull_request:
     branches:
@@ -6,7 +6,7 @@ on:
 env:
     path_to_document: 'latex/main.tex'
 jobs:
-    build:
+    build_latex:
         if: contains(github.event.pull_request.head.ref, 'latex/**')
         name: Build LaTeX Document
         runs-on: ubuntu-latest
@@ -17,3 +17,18 @@ jobs:
               uses: xu-cheng/latex-action@3.2.0
               with:
                 root_file: ${{env.path_to_document}}
+    build_java:
+      if: contains(github.event.pull_request.head.ref, 'code/**')
+      name: Build Java Application
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4.1.1
+        - name: Setup Java JDK
+          uses: actions/setup-java@v4.2.1
+          with:
+            java-version: '17.0.6'
+            distribution: 'temurin'
+            cache: maven
+        - name: Build with Maven
+          run: mvn --batch-mode --update-snapshots package
+      
