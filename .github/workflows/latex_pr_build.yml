@@ -2,11 +2,12 @@ name: LaTeX Build
 on: 
   pull_request:
     branches:
-      - 'latex/**'
+      - 'main'
 env:
     path_to_document: 'latex/main.tex'
 jobs:
     build:
+        if: contains(github.event.pull_request.head.ref, 'latex/**')
         name: Build LaTeX Document
         runs-on: ubuntu-latest
         steps:
