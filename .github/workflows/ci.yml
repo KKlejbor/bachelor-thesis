@@ -1,0 +1,35 @@
+name: CI
+on:
+  pull_request:
+    branches:
+      - 'main'
+env:
+    path_to_document: 'latex/main.tex'
+    java_version: '17.0.6'
+    java_distribution: 'temurin'
+jobs:
+    build_latex:
+        if: contains(github.event.pull_request.head.ref, 'latex/**')
+        name: Build LaTeX Document
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4.1.1
+            - name: Build LaTeX document
+              uses: xu-cheng/latex-action@3.2.0
+              with:
+                root_file: ${{env.path_to_document}}
+    build_java:
+        if: contains(github.event.pull_request.head.ref, 'code/**')
+        name: Build Java Application
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v4.1.1
+          - name: Setup Java JDK
+            uses: actions/setup-java@v4.2.1
+            with:
+              java-version: ${{env.java_version}}
+              distribution: ${{env.java_distribution}}
+              cache: maven
+          - name: Build with Maven
+            run: mvn --batch-mode --update-snapshots package
