@@ -4,7 +4,8 @@ on:
     branches:
       - 'main'
 env:
-    path_to_document: 'latex/main.tex'
+    latex_source_dir: 'latex'
+    path_to_document: 'main.tex'
     java_version: '17.0.6'
     java_distribution: 'temurin'
 jobs:
@@ -18,6 +19,7 @@ jobs:
             - name: Build LaTeX document
               uses: xu-cheng/latex-action@3.2.0
               with:
+                working_directory: ${{env.latex_source_dir}}
                 root_file: ${{env.path_to_document}}
     build_java:
         if: startsWith(github.event.pull_request.head.ref, 'code')
