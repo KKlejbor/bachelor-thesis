@@ -79,7 +79,7 @@ jobs:
               uses: softprops/action-gh-release@v2.0.4
               with:
                 files: |
-                  "${{env.artifacts_dir}}/main.pdf"
+                  ${{env.artifacts_dir}}/main.pdf
                   ${{env.path_to_diff_pdf}}
                 tag_name: ${{env.CURRENT_DATETIME}} 
                 draft: false
