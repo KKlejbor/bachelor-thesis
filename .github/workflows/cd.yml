@@ -8,7 +8,7 @@ env:
     latex_source_dir: 'latex'
     path_to_document: 'main.tex'
     path_to_pdf: 'main.pdf'
-    artifacts_dir: 'artifacts'
+    path_to_artifact_pdf: 'pdf/main.pdf'
     path_to_old_document: 'old-latex/main.tex'
     path_to_diff_document: 'changes.tex'
     path_to_diff_pdf: 'changes.pdf'
@@ -57,14 +57,10 @@ jobs:
               uses: actions/checkout@v4.1.1
             - name: Install latexdiff
               run: sudo apt-get install -y latexdiff
-            - name: Create a directory for artifacts
-              run: mkdir ${{env.artifacts_dir}}
             - name: Download all artifacts
               uses: actions/download-artifact@v4.1.4
-              with:
-                path: ${{env.artifacts_dir}}/
             - name: Create diff document
-              run: latexdiff ${{env.artifacts_dir}}/${{env.path_to_old_document}} ${{env.latex_source_dir}}/${{env.path_to_document}} > ${{env.path_to_diff_document}}
+              run: latexdiff ${{env.path_to_old_document}} ${{env.latex_source_dir}}/${{env.path_to_document}} > ${{env.path_to_diff_document}}
             - name: Build diff document
               uses: xu-cheng/latex-action@3.2.0
               with:
@@ -75,13 +71,11 @@ jobs:
               uses: rickstaa/action-create-tag@v1.7.2
               with:
                 tag: ${{env.CURRENT_DATETIME}}
-            - name: Copy the main document to work workflow home
-              run: cp ${{env.artifacts_dir}}/main.pdf main.pdf
             - name: Release
               uses: softprops/action-gh-release@v2.0.4
               with:
                 files: |
-                  ${{env.artifacts_dir}}/main.pdf
+                  ${{env.path_to_artifact_pdf}}
                   ${{env.path_to_diff_pdf}}
                 tag_name: ${{env.CURRENT_DATETIME}} 
                 draft: false
