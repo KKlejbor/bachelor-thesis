@@ -1,0 +1,79 @@
+name: CD
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - 'main'
+env:
+    path_to_document: 'latex/main.tex'
+    path_to_pdf: 'latex/main.pdf'
+    artifacts_dir: 'artifacts'
+    path_to_old_document: 'old-latex/main.tex'
+    path_to_diff_document: 'changes.tex'
+    path_to_diff_pdf: 'changes.pdf'
+jobs:
+    checkout_base_document:
+        if: startsWith(github.event.pull_request.head.ref, 'latex')
+        name: Retrieve old document
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4.1.1
+              with:
+                ref: github.event.pull_request.base.sha
+            - name: Copy old document
+              run: cp -r latex old-latex
+            - name: Upload old document
+              uses: actions/upload-artifact@v4.3.1
+              with:
+                name: old-latex
+                path: old-latex/
+
+    build_latex:
+        name: Build LaTeX Document
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4.1.1
+            - name: Build LaTeX document
+              uses: xu-cheng/latex-action@3.2.0
+              with:
+                root_file: ${{env.path_to_document}}
+            - name: Upload PDF
+              uses: actions/upload-artifact@v4.3.1
+              with:
+                name: pdf
+                path: ${{env.path_to_pdf}}
+    
+    create_latex_release:
+        name: Create a release with changes
+        needs: [checkout_base_document, build_latex]
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4.1.1
+            - name: Install latexdiff
+              run: sudo apt-get install -y latexdiff
+            - name: Create a directory for artifacts
+              run: mkdir ${{env.artifacts_dir}}
+            - name: Download all artifacts
+              uses: actions/download-artifact@v4.1.4
+              with:
+                path: ${{env.artifacts_dir}}/
+            - name: Create diff document
+              run: latexdiff ${{env.artifacts_dir}}/${{env.path_to_old_document}} ${{env.path_to_document}} > ${{env.path_to_diff_document}}
+            - name: Build diff document
+              uses: xu-cheng/latex-action@3.2.0
+              with:
+                root_file: ${{env.path_to_diff_document}}
+            - name: Get current date
+              id: date
+              run: echo "::set-output name=date::$(date +'%d-%m-%Y %H:%M:%S')"
+            - name: Release
+              uses: softprops/action-gh-release@v2.0.4
+              with:
+                files: |
+                  ${{env.path_to_pdf}}
+                  ${{env.path_to_diff_pdf}}
+                name: $${{steps.date.outputs.date}}
+                tag_name: $${{steps.date.outputs.date}}         
