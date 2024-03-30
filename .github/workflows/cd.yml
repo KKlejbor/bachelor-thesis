@@ -17,7 +17,7 @@ env:
     path_to_diff_pdf: 'changes.pdf'
 jobs:
     checkout_base_document:
-        if: startsWith(github.event.pull_request.head.ref, 'latex')
+        # if: startsWith(github.event.pull_request.head.ref, 'latex')
         name: Retrieve old document
         runs-on: ubuntu-latest
         steps:
@@ -34,7 +34,7 @@ jobs:
                 path: old-latex/
 
     build_latex:
-        if: startsWith(github.event.pull_request.head.ref, 'latex')
+        # if: startsWith(github.event.pull_request.head.ref, 'latex')
         name: Build LaTeX Document
         runs-on: ubuntu-latest
         steps:
