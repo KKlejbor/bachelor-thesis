@@ -70,24 +70,21 @@ jobs:
               with:
                 root_file: ${{env.path_to_diff_document}}
             - name: Get current date
-              id: date
-              run: echo "::set-output name=date::$(date +'%d-%m-%YT%H%M%S')"
+              run: echo "CURRENT_DATETIME=$(date +'%d-%m-%YT%H%M%S')" >> $GITHUB_ENV
             - name: Create date tag
               uses: rickstaa/action-create-tag@v1.7.2
               with:
                 tag: ${{steps.date.outputs.date}}
-            # - name: Update latest tag
-            #   uses: rickstaa/action-create-tag@v1.7.2
-            #   with:
-            #     tag: 'latest'
-            #     force_push_tag: true
+            # Apperantly the release action doesn't work file in different directories
+            - name: Copy main to workflow home
+              run: cp ${{env.path_to_pdf}} main.pdf
             - name: Release
               uses: softprops/action-gh-release@v2.0.4
               with:
                 files: |
-                  ${{env.path_to_pdf}}
+                  main.pdf
                   ${{env.path_to_diff_pdf}}
-                tag_name: ${{steps.date.outputs.date}} 
+                tag_name: ${{env.CURRENT_DATETIME}} 
                 draft: false
                 prerelease: false
                 make_latest: true
