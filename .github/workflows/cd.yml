@@ -5,7 +5,8 @@ on:
     branches:
       - 'main'
 env:
-    path_to_document: 'latex/main.tex'
+    latex_source_dir: 'latex'
+    path_to_document: 'main.tex'
     path_to_pdf: 'latex/main.pdf'
     artifacts_dir: 'artifacts'
     path_to_old_document: 'old-latex/main.tex'
@@ -39,6 +40,7 @@ jobs:
             - name: Build LaTeX document
               uses: xu-cheng/latex-action@3.2.0
               with:
+                working_directory: ${{env.latex_source_dir}}
                 root_file: ${{env.path_to_document}}
             - name: Upload PDF
               uses: actions/upload-artifact@v4.3.1
@@ -62,7 +64,7 @@ jobs:
               with:
                 path: ${{env.artifacts_dir}}/
             - name: Create diff document
-              run: latexdiff ${{env.artifacts_dir}}/${{env.path_to_old_document}} ${{env.path_to_document}} > ${{env.path_to_diff_document}}
+              run: latexdiff ${{env.artifacts_dir}}/${{env.path_to_old_document}} ${{env.latex_source_dir}}/${{env.path_to_document}} > ${{env.path_to_diff_document}}
             - name: Build diff document
               uses: xu-cheng/latex-action@3.2.0
               with:
@@ -76,5 +78,5 @@ jobs:
                 files: |
                   ${{env.path_to_pdf}}
                   ${{env.path_to_diff_pdf}}
-                name: $${{steps.date.outputs.date}}
-                tag_name: $${{steps.date.outputs.date}}         
+                name: ${{steps.date.outputs.date}}
+                tag_name: ${{steps.date.outputs.date}}         
