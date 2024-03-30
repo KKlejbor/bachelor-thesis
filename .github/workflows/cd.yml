@@ -7,7 +7,7 @@ on:
 env:
     latex_source_dir: 'latex'
     path_to_document: 'main.tex'
-    path_to_pdf: 'latex/main.pdf'
+    path_to_pdf: 'main.pdf'
     artifacts_dir: 'artifacts'
     path_to_old_document: 'old-latex/main.tex'
     path_to_diff_document: 'changes.tex'
@@ -46,7 +46,7 @@ jobs:
               uses: actions/upload-artifact@v4.3.1
               with:
                 name: pdf
-                path: ${{env.path_to_pdf}}
+                path: ${{env.latex_source_dir}}/${{env.path_to_pdf}}
     
     create_latex_release:
         name: Create a release with changes
@@ -75,6 +75,8 @@ jobs:
               uses: rickstaa/action-create-tag@v1.7.2
               with:
                 tag: ${{env.CURRENT_DATETIME}}
+            - name: Copy the main document to work workflow home
+              run: cp ${{env.artifacts_dir}}/main.pdf main.pdf
             - name: Release
               uses: softprops/action-gh-release@v2.0.4
               with:
