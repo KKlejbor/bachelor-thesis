@@ -20,7 +20,7 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4.1.1
               with:
-                ref: github.event.pull_request.base.sha
+                ref: ${{github.event.pull_request.base.sha}}
             - name: Copy old document
               run: cp -r latex old-latex
             - name: Upload old document
