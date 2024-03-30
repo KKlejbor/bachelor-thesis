@@ -74,7 +74,7 @@ jobs:
             - name: Create date tag
               uses: rickstaa/action-create-tag@v1.7.2
               with:
-                tag: ${{steps.date.outputs.date}}
+                tag: ${{env.CURRENT_DATETIME}}
             # Apperantly the release action doesn't work file in different directories
             - name: Copy main to workflow home
               run: cp ${{env.path_to_pdf}} main.pdf
