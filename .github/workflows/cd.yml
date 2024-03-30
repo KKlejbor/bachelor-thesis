@@ -4,6 +4,9 @@ on:
     types: [closed]
     branches:
       - 'main'
+  push:
+    branches:
+      - 'latex/**'
 env:
     latex_source_dir: 'latex'
     path_to_document: 'main.tex'
@@ -75,15 +78,22 @@ jobs:
               uses: rickstaa/action-create-tag@v1.7.2
               with:
                 tag: ${{env.CURRENT_DATETIME}}
+            - name:
+              run: |
+                pwd
+                ls
+                ls ${{env.latex_source_dir}}
+                ls ${{env.artifacts_dir}}
+                file -i ${{env.artifacts_dir}}/main.pdf
             - name: Copy the main document to work workflow home
               run: cp ${{env.artifacts_dir}}/main.pdf main.pdf
-            - name: Release
-              uses: softprops/action-gh-release@v2.0.4
-              with:
-                files: |
-                  ${{env.artifacts_dir}}/main.pdf
-                  ${{env.path_to_diff_pdf}}
-                tag_name: ${{env.CURRENT_DATETIME}} 
-                draft: false
-                prerelease: false
-                make_latest: true
+            # - name: Release
+            #   uses: softprops/action-gh-release@v2.0.4
+            #   with:
+            #     files: |
+            #       ${{env.artifacts_dir}}/main.pdf
+            #       ${{env.path_to_diff_pdf}}
+            #     tag_name: ${{env.CURRENT_DATETIME}} 
+            #     draft: false
+            #     prerelease: false
+            #     make_latest: true
