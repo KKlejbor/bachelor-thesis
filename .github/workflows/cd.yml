@@ -30,6 +30,7 @@ jobs:
                 path: old-latex/
 
     build_latex:
+        if: startsWith(github.event.pull_request.head.ref, 'latex')
         name: Build LaTeX Document
         runs-on: ubuntu-latest
         steps:

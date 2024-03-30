@@ -9,7 +9,7 @@ env:
     java_distribution: 'temurin'
 jobs:
     build_latex:
-        if: contains(github.event.pull_request.head.ref, 'latex/**')
+        if: startsWith(github.event.pull_request.head.ref, 'latex')
         name: Build LaTeX Document
         runs-on: ubuntu-latest
         steps:
@@ -20,7 +20,7 @@ jobs:
               with:
                 root_file: ${{env.path_to_document}}
     build_java:
-        if: contains(github.event.pull_request.head.ref, 'code/**')
+        if: startsWith(github.event.pull_request.head.ref, 'code')
         name: Build Java Application
         runs-on: ubuntu-latest
         steps:
