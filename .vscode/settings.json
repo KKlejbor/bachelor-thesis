@@ -1,0 +1,21 @@
+{
+    "ltex.additionalRules.motherTongue": "pl-PL",
+    "explorer.excludeGitIgnore": true,
+    "latex-workshop.linting.chktex.enabled": true,
+    "latex-workshop.linting.chktex.exec.args": [
+        "-wall",
+        "-n1",
+        "-n9",
+        "-n11",
+        "-e16",
+        "-n17",
+        "-n21",
+        "-n22",
+        "-n26",
+        "-n30",
+        "-n35",
+        "-n46",
+        "-q",
+    ],
+    
+}
