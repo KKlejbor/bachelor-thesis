@@ -1,14 +1,19 @@
-\documentclass[a4paper,12pt,twoside]{book}
+\documentclass[a4paper,12pt,twoside,openright]{book}
 
 \usepackage[utf8]{inputenc}
 \usepackage{polski}
-\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm,bindingoffset=1cm]{geometry}
+\usepackage[a4paper,left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm,bindingoffset=1cm,showframe]{geometry}
 \usepackage{times}
 \usepackage{mathptmx}
 \usepackage{graphicx}
 \usepackage{multirow}
 \usepackage{xcolor}
 \usepackage[T1]{fontenc}
+\usepackage{tabularx}
+\usepackage{ulem}
+
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\frenchspacing
 
 \linespread{1.5}
 \setlength\parindent{1cm}
@@ -18,6 +23,7 @@
     \noindent
     \begin{minipage}{.6\linewidth}
         \begin{flushleft}
+        	\footnotesize
             \textbf{UNIWERSYTET MORSKI W GDYNI} \\ 
             \textbf{WYDZIAŁ ELEKTRYCZNY} \\
             Katedra [ Nazwa Katedry ]
@@ -25,6 +31,7 @@
     \end{minipage}
     \begin{minipage}{.4\linewidth}
         \begin{flushright}
+        	\scriptsize
         Nr ewidencyjny:\dotfill \\
         Data złożenia pracy:\dotfill \\
         \hfill
@@ -32,9 +39,10 @@
     \end{minipage}
     
     \begin{figure}[htbp]
-        \centerline{\includegraphics[scale=0.5]{umg-zolty.png}}
+        \centerline{\includegraphics[width=3.64cm,height=3.75cm]{umg-zolty.png}}
+        %\centerline{\includegraphics[scale=0.125]{logo-gmu-6.png}}
     \end{figure}
-    \centerline{\large \textbf{ PRACA DYPLOMOWA INŻYNIERSKA}}
+    \centerline{\fontsize{16pt}{\baselineskip} \selectfont\textbf{ PRACA DYPLOMOWA INŻYNIERSKA}}
     \vspace{1cm}
     
     \noindent 
@@ -42,34 +50,38 @@
     \vspace{1.5cm}
 
     \begin{center}
-        \begin{tabular}{|c|c|c|}
+    	\footnotesize
+        \begin{tabularx}{\textwidth}{|l|C|l|}
             \hline
             Dyplomant: & [ Imię/imiona Nazwisko ] & Numer albumu: [ numer ] \\
             \hline
-            Specjalność & \multicolumn{2}{|c|}{[ specjalność ]}\\
+            Specjalność: & \multicolumn{2}{c}{[ specjalność ]}\\
             \hline
-            Promotor: & [ Imię Nazwisko wraz z tytułami ] & Ocena: [ocena]\\
+            Promotor: & [ Imię Nazwisko wraz z tytułami ] & Ocena: [ ocena ]\\
             \hline
-            Recenzent & [ Imię Nazwisko wraz z tytułami ] & Ocena: [ocena] \\
+            Recenzent & [ Imię Nazwisko wraz z tytułami ] & Ocena: [ ocena ]\\
             \hline
-            Data egzaminu: & [ dd.mm.rrrr ] & Wynik studiów: [ocena ] \\
+            Data egzaminu: & [ dd.mm.rrrr ] & Wynik studiów: [ wynik ] \\
             \hline
-        \end{tabular}
+        \end{tabularx}
     \end{center}
+    
     
     \vspace{1.5cm}
     \noindent
+    \footnotesize
     Recenzent:\dotfill Promotor:\dotfill Dziekan:\dotfill
 
     \vfill
     \begin{flushright}
         \begin{minipage}{.5\linewidth}
-            \begin{flushright}
+            \begin{center}
+            	\scriptsize
                 Wyrażam zgodę / nie wyrażam zgody na\\
                 udostępnianie mojej pracy dyplomowej
                 
                 \vspace{1cm}
-                \begin{minipage}{.47\linewidth}
+                \begin{minipage}{.37\linewidth}
                     \begin{center}
                         \dotfill \\
                         data
@@ -82,7 +94,7 @@
                         podpis
                     \end{center}
                 \end{minipage}
-            \end{flushright}
+            \end{center}
         \end{minipage}
     \end{flushright}
     
@@ -90,6 +102,7 @@
     
     \thispagestyle{empty}
     
+   \vspace*{1cm}
     \noindent
     \begin{minipage}{0.5\linewidth}
         \begin{flushleft}
@@ -119,10 +132,11 @@
     
     Oświadczam ponadto, że niniejsza wersja pracy jest identyczna z załączoną wersją elektroniczną na płycie CD.
     
-    \begin{klauzula}
+    %\begin{klauzula}
     \color{red} 
     Na podstawie art. 75 §2 kodeksu postępowania administracyjnego wnoszę o odebranie tego oświadczenia jako dowodu prawdziwości okoliczności w nim podatnych, przy czym jestem świadomy odpowiedzialności karnej z art. 233 §1 i §6 k.k. za złożenie fałszywego oświadczenia. 
-    \end{klauzula}
+    \color{black}
+    %\end{klauzula}
     
     \vspace{1.5cm}
     \begin{flushright}
