@@ -17,5 +17,6 @@
         "-n46",
         "-q",
     ],
+    "ltex.language": "pl-PL",
     
 }
