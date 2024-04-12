@@ -2,7 +2,7 @@ package edu.umg;
 
 import edu.umg.algorithms.synchronous.FireflyAlgorithm;
 import edu.umg.helpers.RastriginFunction;
-import edu.umg.objects.Firefly;
+import edu.umg.algorithms.synchronous.objects.Firefly;
 
 /**
  * Hello world!

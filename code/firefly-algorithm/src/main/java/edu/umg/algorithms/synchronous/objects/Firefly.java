@@ -1,4 +1,4 @@
-package edu.umg.objects;
+package edu.umg.algorithms.synchronous.objects;
 
 import edu.umg.helpers.Negative;
 
