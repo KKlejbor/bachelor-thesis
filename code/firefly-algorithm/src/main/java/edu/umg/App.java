@@ -14,7 +14,7 @@ public class App {
 
             Firefly finalSolution = new Firefly(fireflyAlgorithm.run(), new RastriginFunction(), false);
 
-            System.out.printf("Najlepsze rozwiązanie: \n%s\n", finalSolution);
+            System.out.printf("Najlepsze rozwiązanie: \n%s\n\n", finalSolution);
         }
     }
 }
