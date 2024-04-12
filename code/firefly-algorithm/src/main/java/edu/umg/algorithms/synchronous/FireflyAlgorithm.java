@@ -9,6 +9,7 @@ public class FireflyAlgorithm {
     private final double maximalAttractiveness;
 
     private final double lightAbsorptionCoefficient;
+
     private double randomStepCoefficient;
 
     private final double randomStepReductionCoefficient;
@@ -27,10 +28,13 @@ public class FireflyAlgorithm {
 
     private final int numberOfDimensions;
 
+    private final boolean minimalize;
+
     private final double lowerBound;
+
     private final double upperBound;
 
-    public FireflyAlgorithm(double maximalAttractiveness, double lightAbsorptionCoefficient, double randomStepCoefficient, double randomStepReductionCoefficient, int populationSize, int maximumNumberOfGenerations , Function<Double[], Double> objectiveFunction, int numberOfDimensions, double lowerBound, double upperBound) {
+    public FireflyAlgorithm(double maximalAttractiveness, double lightAbsorptionCoefficient, double randomStepCoefficient, double randomStepReductionCoefficient, int populationSize, int maximumNumberOfGenerations , Function<Double[], Double> objectiveFunction, int numberOfDimensions, double lowerBound, double upperBound, boolean minimalize) {
         this.maximalAttractiveness = maximalAttractiveness;
         this.lightAbsorptionCoefficient = lightAbsorptionCoefficient;
         this.randomStepCoefficient = randomStepCoefficient;
@@ -41,6 +45,7 @@ public class FireflyAlgorithm {
         this.numberOfDimensions = numberOfDimensions;
         this.lowerBound = lowerBound;
         this.upperBound = upperBound;
+        this.minimalize = minimalize;
     }
 
     public Firefly run(){
@@ -72,7 +77,7 @@ public class FireflyAlgorithm {
         population = new Firefly[populationSize];
 
         for (int i = 0; i < populationSize; i++) {
-            population[i] = new Firefly(objectiveFunction, numberOfDimensions, lowerBound, upperBound);
+            population[i] = new Firefly(objectiveFunction, numberOfDimensions, lowerBound, upperBound, minimalize);
         }
     }
 

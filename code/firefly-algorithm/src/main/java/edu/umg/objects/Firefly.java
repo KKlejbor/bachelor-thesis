@@ -1,5 +1,7 @@
 package edu.umg.objects;
 
+import edu.umg.helpers.Negative;
+
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
@@ -9,8 +11,10 @@ public class Firefly  {
 
     private final Function<Double[], Double> objectiveFunction;
 
-    public Firefly(Function<Double[], Double> objectiveFunction, int numberOfDimensions, Double lowerBound, Double upperBound) {
-        this.objectiveFunction = objectiveFunction;
+    private final Function<Double, Double> Negative = new Negative();
+
+    public Firefly(Function<Double[], Double> objectiveFunction, int numberOfDimensions, Double lowerBound, Double upperBound, boolean minimalize) {
+        this.objectiveFunction = minimalize ? objectiveFunction.andThen(this.Negative) : objectiveFunction;
 
         location = new Double[numberOfDimensions];
 
@@ -19,9 +23,9 @@ public class Firefly  {
         }
     }
 
-    public Firefly(Firefly firefly, Function<Double[], Double> objectiveFunction){
+    public Firefly(Firefly firefly, Function<Double[], Double> objectiveFunction, boolean minimalize){
         this.location = Arrays.copyOf(firefly.location, firefly.location.length);
-        this.objectiveFunction = objectiveFunction;
+        this.objectiveFunction = minimalize ? objectiveFunction.andThen(this.Negative) : objectiveFunction;
     }
 
     public Double getLocationAt(int index) {
