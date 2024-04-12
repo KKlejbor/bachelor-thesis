@@ -24,6 +24,8 @@ public class FireflyAlgorithm {
 
     private Firefly theBestSolution;
 
+    private Firefly finalSolution;
+
     private final Function<Double[], Double> objectiveFunction;
 
     private final int numberOfDimensions;
@@ -63,6 +65,10 @@ public class FireflyAlgorithm {
                 if(population[i].getIntensity() > theBestSolution.getIntensity()){
                     theBestSolution = population[i];
                     locationOfTheBestSolution = i;
+
+                    if(theBestSolution.getIntensity() > finalSolution.getIntensity()){
+                        finalSolution = new Firefly(theBestSolution, objectiveFunction, minimalize);
+                    }
                 }
             }
 
@@ -70,7 +76,7 @@ public class FireflyAlgorithm {
             reduceRandomStepCoefficient();
         }
 
-        return population[locationOfTheBestSolution];
+        return finalSolution;
     }
 
     private void initializePopulation(){
@@ -84,6 +90,7 @@ public class FireflyAlgorithm {
     private void findTheBestSolution(){
         locationOfTheBestSolution = 0;
         theBestSolution = population[0];
+        finalSolution = new Firefly(theBestSolution, objectiveFunction, minimalize);
 
         for (int i = 1; i < populationSize; i++) {
             if(population[i].getIntensity() > theBestSolution.getIntensity()){
