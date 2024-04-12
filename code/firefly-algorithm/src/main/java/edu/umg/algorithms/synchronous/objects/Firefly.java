@@ -14,7 +14,7 @@ public class Firefly  {
     private final Function<Double, Double> Negative = new Negative();
 
     public Firefly(Function<Double[], Double> objectiveFunction, int numberOfDimensions, Double lowerBound, Double upperBound, boolean minimalize) {
-        this.objectiveFunction = minimalize ? objectiveFunction.andThen(this.Negative) : objectiveFunction;
+        this.objectiveFunction = minimalize ? objectiveFunction.andThen(Negative) : objectiveFunction;
 
         location = new Double[numberOfDimensions];
 
@@ -25,7 +25,7 @@ public class Firefly  {
 
     public Firefly(Firefly firefly, Function<Double[], Double> objectiveFunction, boolean minimalize){
         this.location = Arrays.copyOf(firefly.location, firefly.location.length);
-        this.objectiveFunction = minimalize ? objectiveFunction.andThen(this.Negative) : objectiveFunction;
+        this.objectiveFunction = minimalize ? objectiveFunction.andThen(Negative) : objectiveFunction;
     }
 
     public Double getLocationAt(int index) {
