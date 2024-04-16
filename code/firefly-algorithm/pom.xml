@@ -39,5 +39,10 @@
       <groupId>com.typesafe.akka</groupId>
       <artifactId>akka-cluster-typed_${scala.binary.version}</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.javatuples</groupId>
+      <artifactId>javatuples</artifactId>
+      <version>1.2</version>
+    </dependency>
   </dependencies>
 </project>
