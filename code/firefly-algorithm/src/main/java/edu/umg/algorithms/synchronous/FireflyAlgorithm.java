@@ -133,15 +133,14 @@ public class FireflyAlgorithm {
             );
         }
 
-        return Math.sqrt(result);
+        return result;
     }
 
     private double computeAttractiveness(int index1, int index2) {
         return (
             maximalAttractiveness *
             Math.exp(
-                -lightAbsorptionCoefficient *
-                Math.pow(distanceBetweenFireflies(index1, index2), 2)
+                -lightAbsorptionCoefficient * distanceBetweenFireflies(index1, index2)
             )
         );
     }
