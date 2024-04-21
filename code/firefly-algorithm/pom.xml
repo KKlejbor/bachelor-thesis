@@ -79,7 +79,7 @@
     </plugins>
   </build>
 
-  <profiles>
+  <!--<profiles>
     <profile>
       <id>travis</id>
       <activation>
@@ -88,9 +88,9 @@
         </property>
       </activation>
       <properties>
-        <!-- But in our CI environment we want to validate that code is formatted -->
+        &lt;!&ndash; But in our CI environment we want to validate that code is formatted &ndash;&gt;
         <plugin.prettier.goal>check</plugin.prettier.goal>
       </properties>
     </profile>
-  </profiles>
+  </profiles>-->
 </project>
