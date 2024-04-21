@@ -1,6 +1,7 @@
 package edu.umg.algorithms.synchronous.objects;
 
 import edu.umg.helpers.Negative;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
@@ -59,13 +60,15 @@ public class Firefly {
         StringBuilder stringBuilder = new StringBuilder("f(");
 
         for (int i = 0; i < location.length - 1; i++) {
-            stringBuilder.append(String.format("%.5f, ", location[i]));
+            stringBuilder.append(String.format("%.16f, ", location[i]));
         }
 
+        DecimalFormat decimalFormat = new DecimalFormat("0.################");
+
         return stringBuilder
-            .append(String.format("%.5f", location[location.length - 1]))
+            .append(String.format("%.16f", location[location.length - 1]))
             .append(") = ")
-            .append(String.format("%.5f", getIntensity()))
+            .append(decimalFormat.format(getIntensity()))
             .toString();
     }
 }
