@@ -1,6 +1,5 @@
 package edu.umg.algorithms.synchronous;
 
-import edu.umg.algorithms.synchronous.objects.Firefly;
 import edu.umg.algorithms.synchronous.objects.FireflyUsingPair;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
