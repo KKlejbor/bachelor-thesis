@@ -4,9 +4,6 @@ import edu.umg.algorithms.synchronous.FireflyAlgorithm;
 import edu.umg.helpers.benchmark_functions.multidimensional.Rastrigin;
 import edu.umg.algorithms.synchronous.objects.Firefly;
 
-/**
- * Hello world!
- */
 public class App {
     public static void main(String[] args) {
         for (int i = 0; i < 10; i++) {
