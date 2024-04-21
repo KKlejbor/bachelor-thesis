@@ -4,9 +4,13 @@ import java.util.Arrays;
 import java.util.function.Function;
 
 public class Griewank implements Function<Double[], Double> {
+
     @Override
     public Double apply(Double[] args) {
-        double term1 = Arrays.stream(args).reduce(0.0, (x, y) -> x + (Math.pow(y, 2) / 4000.0));
+        double term1 = Arrays.stream(args).reduce(
+            0.0,
+            (x, y) -> x + (Math.pow(y, 2) / 4000.0)
+        );
 
         double[] modifiedArgs = new double[args.length];
 
@@ -14,7 +18,7 @@ public class Griewank implements Function<Double[], Double> {
             modifiedArgs[i] = args[i] / Math.sqrt(i + 1);
         }
 
-        double term2 = Arrays.stream(modifiedArgs).reduce(1.0, (x,y) -> x * Math.cos(y));
+        double term2 = Arrays.stream(modifiedArgs).reduce(1.0, (x, y) -> x * Math.cos(y));
 
         return term1 - term2 + 1;
     }

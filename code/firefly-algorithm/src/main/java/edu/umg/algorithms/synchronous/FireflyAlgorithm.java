@@ -1,11 +1,11 @@
 package edu.umg.algorithms.synchronous;
 
 import edu.umg.algorithms.synchronous.objects.Firefly;
-
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 
 public class FireflyAlgorithm {
+
     private final double maximalAttractiveness;
 
     private final double lightAbsorptionCoefficient;
@@ -36,7 +36,19 @@ public class FireflyAlgorithm {
 
     private final double upperBound;
 
-    public FireflyAlgorithm(double maximalAttractiveness, double lightAbsorptionCoefficient, double randomStepCoefficient, double randomStepReductionCoefficient, int populationSize, int maximumNumberOfGenerations , Function<Double[], Double> objectiveFunction, int numberOfDimensions, double lowerBound, double upperBound, boolean minimalize) {
+    public FireflyAlgorithm(
+        double maximalAttractiveness,
+        double lightAbsorptionCoefficient,
+        double randomStepCoefficient,
+        double randomStepReductionCoefficient,
+        int populationSize,
+        int maximumNumberOfGenerations,
+        Function<Double[], Double> objectiveFunction,
+        int numberOfDimensions,
+        double lowerBound,
+        double upperBound,
+        boolean minimalize
+    ) {
         this.maximalAttractiveness = maximalAttractiveness;
         this.lightAbsorptionCoefficient = lightAbsorptionCoefficient;
         this.randomStepCoefficient = randomStepCoefficient;
@@ -50,24 +62,28 @@ public class FireflyAlgorithm {
         this.minimalize = minimalize;
     }
 
-    public Firefly run(){
+    public Firefly run() {
         initializePopulation();
         findTheBestSolution();
 
         for (int n = 0; n < maximumNumberOfGenerations; n++) {
             for (int i = 0; i < populationSize; i++) {
                 for (int j = 0; j < populationSize; j++) {
-                    if(population[i].getIntensity() < population[j].getIntensity()){
+                    if (population[i].getIntensity() < population[j].getIntensity()) {
                         population[i].setLocation(computeNewLocation(i, j));
                     }
                 }
 
-                if(population[i].getIntensity() > theBestSolution.getIntensity()){
+                if (population[i].getIntensity() > theBestSolution.getIntensity()) {
                     theBestSolution = population[i];
                     locationOfTheBestSolution = i;
 
-                    if(theBestSolution.getIntensity() > finalSolution.getIntensity()){
-                        finalSolution = new Firefly(theBestSolution, objectiveFunction, minimalize);
+                    if (theBestSolution.getIntensity() > finalSolution.getIntensity()) {
+                        finalSolution = new Firefly(
+                            theBestSolution,
+                            objectiveFunction,
+                            minimalize
+                        );
                     }
                 }
             }
@@ -79,53 +95,73 @@ public class FireflyAlgorithm {
         return finalSolution;
     }
 
-    private void initializePopulation(){
+    private void initializePopulation() {
         population = new Firefly[populationSize];
 
         for (int i = 0; i < populationSize; i++) {
-            population[i] = new Firefly(objectiveFunction, numberOfDimensions, lowerBound, upperBound, minimalize);
+            population[i] = new Firefly(
+                objectiveFunction,
+                numberOfDimensions,
+                lowerBound,
+                upperBound,
+                minimalize
+            );
         }
     }
 
-    private void findTheBestSolution(){
+    private void findTheBestSolution() {
         locationOfTheBestSolution = 0;
         theBestSolution = population[0];
         finalSolution = new Firefly(theBestSolution, objectiveFunction, minimalize);
 
         for (int i = 1; i < populationSize; i++) {
-            if(population[i].getIntensity() > theBestSolution.getIntensity()){
+            if (population[i].getIntensity() > theBestSolution.getIntensity()) {
                 locationOfTheBestSolution = i;
                 theBestSolution = population[locationOfTheBestSolution];
             }
         }
     }
 
-    private double distanceBetweenFireflies(int index1, int index2){
+    private double distanceBetweenFireflies(int index1, int index2) {
         double result = 0;
 
         for (int i = 0; i < numberOfDimensions; i++) {
-            result += Math.pow(population[index1].getLocationAt(i) - population[index2].getLocationAt(i), 2);
+            result +=
+            Math.pow(
+                population[index1].getLocationAt(i) - population[index2].getLocationAt(i),
+                2
+            );
         }
 
         return Math.sqrt(result);
     }
 
-    private double computeAttractiveness(int index1, int index2){
-        return maximalAttractiveness * Math.exp(-lightAbsorptionCoefficient * Math.pow(distanceBetweenFireflies(index1, index2), 2));
+    private double computeAttractiveness(int index1, int index2) {
+        return (
+            maximalAttractiveness *
+            Math.exp(
+                -lightAbsorptionCoefficient *
+                Math.pow(distanceBetweenFireflies(index1, index2), 2)
+            )
+        );
     }
 
-    private Double[] computeNewLocation(int index1, int index2){
+    private Double[] computeNewLocation(int index1, int index2) {
         double attractiveness = computeAttractiveness(index1, index2);
         Double[] newLocation = new Double[numberOfDimensions];
 
         for (int i = 0; i < numberOfDimensions; i++) {
-            newLocation[i] = population[index1].getLocationAt(i) + attractiveness * (population[index2].getLocationAt(i) - population[index1].getLocationAt(i)) + computeRandomStep();
+            newLocation[i] = population[index1].getLocationAt(i) +
+            attractiveness *
+                (population[index2].getLocationAt(i) -
+                    population[index1].getLocationAt(i)) +
+            computeRandomStep();
 
-            if(newLocation[i] < lowerBound){
+            if (newLocation[i] < lowerBound) {
                 newLocation[i] = lowerBound;
             }
 
-            if(newLocation[i] > upperBound){
+            if (newLocation[i] > upperBound) {
                 newLocation[i] = upperBound;
             }
         }
@@ -133,21 +169,22 @@ public class FireflyAlgorithm {
         return newLocation;
     }
 
-    private double computeRandomStep(){
+    private double computeRandomStep() {
         return randomStepCoefficient * (ThreadLocalRandom.current().nextDouble() - 0.5);
     }
 
-    private Double[] computeNewLocation(){
+    private Double[] computeNewLocation() {
         Double[] newLocation = new Double[numberOfDimensions];
 
         for (int i = 0; i < numberOfDimensions; i++) {
-            newLocation[i] = population[locationOfTheBestSolution].getLocationAt(i) + computeRandomStep();
+            newLocation[i] = population[locationOfTheBestSolution].getLocationAt(i) +
+            computeRandomStep();
 
-            if(newLocation[i] < lowerBound){
+            if (newLocation[i] < lowerBound) {
                 newLocation[i] = lowerBound;
             }
 
-            if(newLocation[i] > upperBound){
+            if (newLocation[i] > upperBound) {
                 newLocation[i] = upperBound;
             }
         }
@@ -155,8 +192,7 @@ public class FireflyAlgorithm {
         return newLocation;
     }
 
-    private void reduceRandomStepCoefficient(){
+    private void reduceRandomStepCoefficient() {
         randomStepCoefficient *= randomStepReductionCoefficient;
     }
-
 }

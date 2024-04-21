@@ -1,10 +1,10 @@
 package edu.umg.helpers.benchmark_functions.two_dimensional;
 
+import java.util.function.Function;
 import org.javatuples.Pair;
 
-import java.util.function.Function;
-
 public class Bohachevsky implements Function<Pair<Double, Double>, Double> {
+
     @Override
     public Double apply(Pair<Double, Double> args) {
         double term1 = Math.pow(args.getValue0(), 2);
