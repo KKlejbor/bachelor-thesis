@@ -34,4 +34,4 @@ jobs:
               distribution: ${{env.java_distribution}}
               cache: maven
           - name: Build with Maven
-            run: mvn --batch-mode --update-snapshots package
+            run: mvn --batch-mode --update-snapshots -f code/firefly-algorithm/pom.xml package

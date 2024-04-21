@@ -8,13 +8,14 @@
   <packaging>jar</packaging>
 
   <name>firefly-algorithm</name>
-  <url>http://maven.apache.org</url>
+  <url>https://maven.apache.org</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <scala.binary.version>2.13</scala.binary.version>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
+    <plugin.prettier.goal>write</plugin.prettier.goal>
   </properties>
 
   <dependencyManagement>
@@ -39,5 +40,57 @@
       <groupId>com.typesafe.akka</groupId>
       <artifactId>akka-cluster-typed_${scala.binary.version}</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.javatuples</groupId>
+      <artifactId>javatuples</artifactId>
+      <version>1.2</version>
+    </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.hubspot.maven.plugins</groupId>
+        <artifactId>prettier-maven-plugin</artifactId>
+        <version>0.22</version>
+        <configuration>
+          <prettierJavaVersion>2.6.0</prettierJavaVersion>
+          <printWidth>90</printWidth>
+          <tabWidth>4</tabWidth>
+          <useTabs>false</useTabs>
+          <ignoreConfigFile>true</ignoreConfigFile>
+          <ignoreEditorConfig>true</ignoreEditorConfig>
+          <!-- Use <inputGlobs> to override the default input patterns -->
+          <inputGlobs>
+            <!-- These are the default patterns, you can omit <inputGlobs> entirely unless you want to override them -->
+            <inputGlob>src/main/java/**/*.java</inputGlob>
+            <inputGlob>src/test/java/**/*.java</inputGlob>
+          </inputGlobs>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>${plugin.prettier.goal}</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>travis</id>
+      <activation>
+        <property>
+          <name>env.TRAVIS</name>
+        </property>
+      </activation>
+      <properties>
+        <!-- But in our CI environment we want to validate that code is formatted -->
+        <plugin.prettier.goal>check</plugin.prettier.goal>
+      </properties>
+    </profile>
+  </profiles>
 </project>
