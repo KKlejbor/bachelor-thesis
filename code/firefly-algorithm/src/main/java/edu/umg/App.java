@@ -2,7 +2,8 @@ package edu.umg;
 
 import edu.umg.algorithms.synchronous.FireflyAlgorithm;
 import edu.umg.helpers.benchmark_functions.multidimensional.Rastrigin;
-import edu.umg.algorithms.synchronous.objects.Firefly;
+
+import java.util.Arrays;
 
 /**
  * Hello world!
@@ -10,11 +11,12 @@ import edu.umg.algorithms.synchronous.objects.Firefly;
 public class App {
     public static void main(String[] args) {
         for (int i = 0; i < 10; i++) {
-            FireflyAlgorithm fireflyAlgorithm = new FireflyAlgorithm(1, 0.1, 0.8, 0.98, 90, 2000, new Rastrigin(), 4, -5.12, 5.12, true);
+            Rastrigin Rastrigin = new Rastrigin();
+            FireflyAlgorithm fireflyAlgorithm = new FireflyAlgorithm(1, 0.1, 0.8, 0.98, 90, 2000, Rastrigin, 4, -5.12, 5.12, true);
 
-            Firefly finalSolution = new Firefly(fireflyAlgorithm.run(), new Rastrigin(), false);
+            Double[] finalSolution = fireflyAlgorithm.run();
 
-            System.out.printf("Najlepsze rozwiązanie: \n%s\n\n", finalSolution);
+            System.out.printf("Najlepsze rozwiązanie: \n%s = %1.6f\n\n", Arrays.toString(finalSolution), Rastrigin.apply(finalSolution));
         }
     }
 }
