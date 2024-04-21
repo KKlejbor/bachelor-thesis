@@ -33,5 +33,7 @@ jobs:
               java-version: ${{env.java_version}}
               distribution: ${{env.java_distribution}}
               cache: maven
+          - name: Go to java project
+            run: cd code/firefly-algorithm
           - name: Build with Maven
-            run: mvn --batch-mode --update-snapshots package code/firefly-algorithm/pom.xml
+            run: mvn --batch-mode --update-snapshots package
