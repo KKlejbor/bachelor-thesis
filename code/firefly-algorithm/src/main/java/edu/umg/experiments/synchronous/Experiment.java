@@ -1,5 +1,10 @@
 package edu.umg.experiments.synchronous;
 
+import scala.Array$;
+
+import java.util.Arrays;
+import java.util.stream.DoubleStream;
+
 public interface Experiment {
     void run();
 
@@ -8,15 +13,7 @@ public interface Experiment {
     }
 
     default double[] flatten(double[][] values) {
-        double[] all = new double[values.length * values[0].length];
-
-        for (int i = 0; i < values.length; i++) {
-            for (int j = 0; j < values[i].length; j++) {
-                all[i * j + i] = values[i][j];
-            }
-        }
-
-        return all;
+        return Arrays.stream(values).flatMapToDouble(DoubleStream::of).toArray();
     }
 
     default String getTime(double seconds) {
