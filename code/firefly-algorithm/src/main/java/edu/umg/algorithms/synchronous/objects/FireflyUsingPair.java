@@ -1,72 +1,38 @@
 package edu.umg.algorithms.synchronous.objects;
 
 import edu.umg.helpers.Negative;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 import org.javatuples.Pair;
 
-public class FireflyUsingPair {
-
-    private final Function<Pair<Double, Double>, Double> objectiveFunction;
-    private final Function<Double, Double> Negative = new Negative();
-    private Pair<Double, Double> location;
-
-    public FireflyUsingPair(
-        Function<Pair<Double, Double>, Double> objectiveFunction,
-        Double lowerBound,
-        Double upperBound,
-        boolean minimalize
-    ) {
-        this.objectiveFunction = minimalize
-            ? objectiveFunction.andThen(Negative)
-            : objectiveFunction;
-
-        location = new Pair<>(
-            ThreadLocalRandom.current().nextDouble(lowerBound, upperBound),
-            ThreadLocalRandom.current().nextDouble(lowerBound, upperBound)
-        );
-    }
-
-    public FireflyUsingPair(
-        FireflyUsingPair firefly,
-        Function<Pair<Double, Double>, Double> objectiveFunction,
-        boolean minimalize
-    ) {
-        this.location = new Pair<>(
-            firefly.location.getValue0(),
-            firefly.location.getValue1()
-        );
-        this.objectiveFunction = minimalize
-            ? objectiveFunction.andThen(Negative)
-            : objectiveFunction;
-    }
-
-    public Double getLocationAt(int index) {
-        return (Double) location.getValue(index);
-    }
-
-    public void setLocation(Pair<Double, Double> location) {
-        this.location = location;
-    }
-
+public record FireflyUsingPair(
+    Pair<Double, Double> location,
+    Function<Pair<Double, Double>, Double> objectiveFunction
+) {
     public Double getIntensity() {
         return objectiveFunction.apply(location);
     }
 
+    public FireflyUsingPair getCopy() {
+        return getCopy(false);
+    }
+
+    public FireflyUsingPair getCopy(boolean invert) {
+        return new FireflyUsingPair(
+            new Pair<>(location.getValue0(), location.getValue1()),
+            invert
+                ? this.objectiveFunction.andThen(new Negative())
+                : this.objectiveFunction
+        );
+    }
+
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder("f(");
-
-        for (int i = 0; i < location.getSize() - 1; i++) {
-            stringBuilder.append(String.format("%.5f, ", (Double) location.getValue(i)));
-        }
-
-        return stringBuilder
-            .append(
-                String.format("%.5f", (Double) location.getValue(location.getSize() - 1))
-            )
-            .append(") = ")
-            .append(String.format("%.5f", getIntensity()))
-            .toString();
+        return (
+            "f(" +
+            String.format("%.16f, ", location.getValue0()) +
+            String.format("%.16f", location.getValue1()) +
+            ") = " +
+            String.format("%.16f", getIntensity())
+        );
     }
 }

@@ -70,19 +70,23 @@ public class ExperimentMultidimensional implements Experiment {
                 minimalize
             );
 
+            System.out.printf(
+                "Funkcja %s, podejście %d.: ",
+                objectiveFunction.getClass().getSimpleName(),
+                i + 1
+            );
+
             runs[i] = fireflyAlgorithm.run();
+
+            System.out.printf("ukończone\n");
             locations[i] = fireflyAlgorithm.getLocations();
 
-            Firefly finalSolution = new Firefly(
-                fireflyAlgorithm.getFinalSolution(),
-                objectiveFunction,
-                false
-            );
+            Firefly finalSolution = fireflyAlgorithm.getFinalSolution();
 
             System.out.printf("Najlepsze rozwiązanie: \n%s\n\n", finalSolution);
         }
 
-        Iteration[] results = new Iteration[maximumNumberOfGenerations];
+        Iteration[] results = new Iteration[maximumNumberOfGenerations + 1];
 
         for (int i = 0; i < results.length; i++) {
             results[i] = new Iteration(0.0, 0.0);

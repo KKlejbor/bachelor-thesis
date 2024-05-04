@@ -70,16 +70,12 @@ public class ExperimentTwoDimensional implements Experiment {
             runs[i] = fireflyAlgorithm.run();
             locations[i] = fireflyAlgorithm.getLocations();
 
-            FireflyUsingPair finalSolution = new FireflyUsingPair(
-                fireflyAlgorithm.getFinalSolution(),
-                objectiveFunction,
-                false
-            );
+            FireflyUsingPair finalSolution = fireflyAlgorithm.getFinalSolution();
 
             System.out.printf("Najlepsze rozwiązanie: \n%s\n\n", finalSolution);
         }
 
-        Iteration[] results = new Iteration[maximumNumberOfGenerations];
+        Iteration[] results = new Iteration[maximumNumberOfGenerations + 1];
 
         for (int i = 0; i < results.length; i++) {
             results[i] = new Iteration(0.0, 0.0);

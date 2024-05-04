@@ -11,7 +11,7 @@ public class FireflyAlgorithmUsingPair {
 
     private final double maximalAttractiveness;
     private final double lightAbsorptionCoefficient;
-    private final double randomStepReductionCoefficient;
+    private final double reductionCoefficient;
     private final int populationSize;
     private final int maximumNumberOfGenerations;
     private final Iteration[] iterations;
@@ -30,7 +30,7 @@ public class FireflyAlgorithmUsingPair {
         double maximalAttractiveness,
         double lightAbsorptionCoefficient,
         double randomStepCoefficient,
-        double randomStepReductionCoefficient,
+        double reductionCoefficient,
         int populationSize,
         int maximumNumberOfGenerations,
         Function<Pair<Double, Double>, Double> objectiveFunction,
@@ -41,27 +41,33 @@ public class FireflyAlgorithmUsingPair {
         this.maximalAttractiveness = maximalAttractiveness;
         this.lightAbsorptionCoefficient = lightAbsorptionCoefficient;
         this.randomStepCoefficient = randomStepCoefficient;
-        this.randomStepReductionCoefficient = randomStepReductionCoefficient;
+        this.reductionCoefficient = reductionCoefficient;
         this.populationSize = populationSize;
         this.maximumNumberOfGenerations = maximumNumberOfGenerations;
-        this.objectiveFunction = objectiveFunction;
+        this.objectiveFunction = minimalize
+            ? objectiveFunction.andThen(new Negative())
+            : objectiveFunction;
         this.lowerBound = lowerBound;
         this.upperBound = upperBound;
         this.minimalize = minimalize;
-        this.iterations = new Iteration[maximumNumberOfGenerations];
+        this.iterations = new Iteration[maximumNumberOfGenerations + 1];
         this.locations = new Double[maximumNumberOfGenerations + 1][populationSize][2];
     }
 
     public Iteration[] run() {
         initializePopulation();
         findTheBestSolution();
+        addIteration(0);
         addLocationAt(0);
 
         for (int n = 0; n < maximumNumberOfGenerations; n++) {
             for (int i = 0; i < populationSize; i++) {
                 for (int j = 0; j < populationSize; j++) {
                     if (population[i].getIntensity() < population[j].getIntensity()) {
-                        population[i].setLocation(computeNewLocation(i, j));
+                        population[i] = new FireflyUsingPair(
+                            computeNewLocation(i, j),
+                            objectiveFunction
+                        );
                     }
                 }
 
@@ -70,18 +76,17 @@ public class FireflyAlgorithmUsingPair {
                     locationOfTheBestSolution = i;
 
                     if (theBestSolution.getIntensity() > finalSolution.getIntensity()) {
-                        finalSolution = new FireflyUsingPair(
-                            theBestSolution,
-                            objectiveFunction,
-                            minimalize
-                        );
+                        finalSolution = theBestSolution.getCopy();
                     }
                 }
             }
 
-            theBestSolution.setLocation(computeNewLocation());
+            theBestSolution = new FireflyUsingPair(
+                computeNewLocation(),
+                objectiveFunction
+            );
             reduceRandomStepCoefficient();
-            addIteration(n);
+            addIteration(n + 1);
             addLocationAt(n + 1);
         }
 
@@ -93,10 +98,11 @@ public class FireflyAlgorithmUsingPair {
 
         for (int i = 0; i < populationSize; i++) {
             population[i] = new FireflyUsingPair(
-                objectiveFunction,
-                lowerBound,
-                upperBound,
-                minimalize
+                new Pair<>(
+                    ThreadLocalRandom.current().nextDouble(lowerBound, upperBound),
+                    ThreadLocalRandom.current().nextDouble(lowerBound, upperBound)
+                ),
+                objectiveFunction
             );
         }
     }
@@ -112,21 +118,19 @@ public class FireflyAlgorithmUsingPair {
             }
         }
 
-        finalSolution = new FireflyUsingPair(
-            theBestSolution,
-            objectiveFunction,
-            minimalize
-        );
+        finalSolution = theBestSolution.getCopy();
     }
 
     private double distanceBetweenFireflies(int index1, int index2) {
         double result = Math.pow(
-            population[index1].getLocationAt(0) - population[index2].getLocationAt(0),
+            population[index1].location().getValue0() -
+            population[index2].location().getValue0(),
             2
         );
         result +=
         Math.pow(
-            population[index1].getLocationAt(1) - population[index2].getLocationAt(1),
+            population[index1].location().getValue1() -
+            population[index2].location().getValue1(),
             2
         );
 
@@ -146,16 +150,16 @@ public class FireflyAlgorithmUsingPair {
         double attractiveness = computeAttractiveness(index1, index2);
 
         double first =
-            population[index1].getLocationAt(0) +
+            population[index1].location().getValue0() +
             attractiveness *
-                (population[index2].getLocationAt(0) -
-                    population[index1].getLocationAt(0)) +
+                (population[index2].location().getValue0() -
+                    population[index1].location().getValue0()) +
             computeRandomStep();
         double second =
-            population[index1].getLocationAt(1) +
+            population[index1].location().getValue1() +
             attractiveness *
-                (population[index2].getLocationAt(1) -
-                    population[index1].getLocationAt(1)) +
+                (population[index2].location().getValue1() -
+                    population[index1].location().getValue1()) +
             computeRandomStep();
 
         return createNewPair(first, second);
@@ -167,9 +171,11 @@ public class FireflyAlgorithmUsingPair {
 
     private Pair<Double, Double> computeNewLocation() {
         double first =
-            population[locationOfTheBestSolution].getLocationAt(0) + computeRandomStep();
+            population[locationOfTheBestSolution].location().getValue0() +
+            computeRandomStep();
         double second =
-            population[locationOfTheBestSolution].getLocationAt(1) + computeRandomStep();
+            population[locationOfTheBestSolution].location().getValue1() +
+            computeRandomStep();
 
         return createNewPair(first, second);
     }
@@ -195,7 +201,7 @@ public class FireflyAlgorithmUsingPair {
     }
 
     private void reduceRandomStepCoefficient() {
-        randomStepCoefficient *= randomStepReductionCoefficient;
+        randomStepCoefficient *= reductionCoefficient;
     }
 
     private void addIteration(int index) {
@@ -218,13 +224,13 @@ public class FireflyAlgorithmUsingPair {
     private void addLocationAt(int index) {
         for (int i = 0; i < populationSize; i++) {
             for (int j = 0; j < 2; j++) {
-                locations[index][i][j] = population[i].getLocationAt(j);
+                locations[index][i][j] = (Double) population[i].location().getValue(j);
             }
         }
     }
 
     public FireflyUsingPair getFinalSolution() {
-        return finalSolution;
+        return finalSolution.getCopy(minimalize);
     }
 
     public Double[][][] getLocations() {
