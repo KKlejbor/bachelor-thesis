@@ -1,58 +1,21 @@
 package edu.umg.algorithms.synchronous.objects;
 
-import edu.umg.helpers.Negative;
+import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
+
 import java.text.DecimalFormat;
 import java.util.Arrays;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.Function;
 
-public class Firefly {
-
-    private Double[] location;
-
-    private final Function<Double[], Double> objectiveFunction;
-
-    private final Function<Double, Double> Negative = new Negative();
-
-    public Firefly(
-        Function<Double[], Double> objectiveFunction,
-        int numberOfDimensions,
-        Double lowerBound,
-        Double upperBound,
-        boolean minimalize
-    ) {
-        this.objectiveFunction = minimalize
-            ? objectiveFunction.andThen(Negative)
-            : objectiveFunction;
-
-        location = new Double[numberOfDimensions];
-
-        for (int i = 0; i < location.length; i++) {
-            location[i] = ThreadLocalRandom.current().nextDouble(lowerBound, upperBound);
-        }
+public record Firefly(Double[] location, BenchmarkFunction<Double[], Double> objectiveFunction) {
+    public Double getIntensity(){
+        return getIntensity(false);
     }
 
-    public Firefly(
-        Firefly firefly,
-        Function<Double[], Double> objectiveFunction,
-        boolean minimalize
-    ) {
-        this.location = Arrays.copyOf(firefly.location, firefly.location.length);
-        this.objectiveFunction = minimalize
-            ? objectiveFunction.andThen(Negative)
-            : objectiveFunction;
+    public Double getIntensity(boolean invert){
+        return invert ? objectiveFunction.apply(location) * -1D : objectiveFunction.apply(location);
     }
 
-    public Double getLocationAt(int index) {
-        return location[index];
-    }
-
-    public void setLocation(Double[] location) {
-        this.location = location;
-    }
-
-    public Double getIntensity() {
-        return objectiveFunction.apply(location);
+    public Firefly getCopy() {
+        return new Firefly(Arrays.copyOf(location, location.length), objectiveFunction);
     }
 
     @Override

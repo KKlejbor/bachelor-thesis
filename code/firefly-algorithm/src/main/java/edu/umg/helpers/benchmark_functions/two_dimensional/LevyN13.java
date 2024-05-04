@@ -1,9 +1,9 @@
 package edu.umg.helpers.benchmark_functions.two_dimensional;
 
-import java.util.function.Function;
+import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
 import org.javatuples.Pair;
 
-public class LevyN13 implements Function<Pair<Double, Double>, Double> {
+public class LevyN13 implements BenchmarkFunction<Pair<Double, Double>, Double> {
 
     @Override
     public Double apply(Pair<Double, Double> args) {
@@ -13,5 +13,10 @@ public class LevyN13 implements Function<Pair<Double, Double>, Double> {
         double term4 = Math.pow(args.getValue1() - 1, 2);
         double term5 = 1 + Math.pow(Math.sin(2 * Math.PI * args.getValue1()), 2);
         return term1 + term2 * term3 + term4 * term5;
+    }
+
+    @Override
+    public Double[] getExtremes() {
+        return new Double[] {0D};
     }
 }

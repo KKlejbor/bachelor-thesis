@@ -1,9 +1,10 @@
 package edu.umg.helpers.benchmark_functions.multidimensional;
 
-import java.util.Arrays;
-import java.util.function.Function;
+import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
 
-public class Griewank implements Function<Double[], Double> {
+import java.util.Arrays;
+
+public class Griewank implements BenchmarkFunction<Double[], Double> {
 
     @Override
     public Double apply(Double[] args) {
@@ -21,5 +22,10 @@ public class Griewank implements Function<Double[], Double> {
         double term2 = Arrays.stream(modifiedArgs).reduce(1.0, (x, y) -> x * Math.cos(y));
 
         return term1 - term2 + 1;
+    }
+
+    @Override
+    public Double[] getExtremes() {
+        return new Double[] {0D};
     }
 }

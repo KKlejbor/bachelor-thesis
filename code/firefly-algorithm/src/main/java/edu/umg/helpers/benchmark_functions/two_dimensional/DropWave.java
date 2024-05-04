@@ -1,9 +1,10 @@
 package edu.umg.helpers.benchmark_functions.two_dimensional;
 
-import java.util.function.Function;
+
+import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
 import org.javatuples.Pair;
 
-public class DropWave implements Function<Pair<Double, Double>, Double> {
+public class DropWave implements BenchmarkFunction<Pair<Double, Double>, Double> {
 
     @Override
     public Double apply(Pair<Double, Double> args) {
@@ -16,5 +17,10 @@ public class DropWave implements Function<Pair<Double, Double>, Double> {
         double denominator =
             0.5 * (Math.pow(args.getValue0(), 2) + Math.pow(args.getValue1(), 2)) + 2;
         return -(numerator / denominator);
+    }
+
+    @Override
+    public Double[] getExtremes() {
+        return new Double[] {-1D};
     }
 }

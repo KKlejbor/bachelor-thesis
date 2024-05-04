@@ -1,9 +1,10 @@
 package edu.umg.helpers.benchmark_functions.two_dimensional;
 
-import java.util.function.Function;
+
+import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
 import org.javatuples.Pair;
 
-public class Easom implements Function<Pair<Double, Double>, Double> {
+public class Easom implements BenchmarkFunction<Pair<Double, Double>, Double> {
 
     @Override
     public Double apply(Pair<Double, Double> args) {
@@ -15,5 +16,10 @@ public class Easom implements Function<Pair<Double, Double>, Double> {
         double term3 = Math.exp(subTerm1 - subTerm2);
 
         return term1 * term2 * term3;
+    }
+
+    @Override
+    public Double[] getExtremes() {
+        return new Double[] {-1D};
     }
 }

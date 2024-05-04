@@ -3,10 +3,10 @@ package edu.umg;
 import edu.umg.experiments.synchronous.Experiment;
 import edu.umg.experiments.synchronous.ExperimentMultidimensional;
 import edu.umg.experiments.synchronous.ExperimentTwoDimensional;
+import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
 import edu.umg.helpers.benchmark_functions.multidimensional.*;
 import edu.umg.helpers.benchmark_functions.two_dimensional.*;
 import java.util.ArrayList;
-import java.util.function.Function;
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
 import org.javatuples.Triplet;
@@ -19,18 +19,18 @@ public class App {
         int[] populationSizes = new int[] { 100, 250, 500 };
 
         ArrayList<
-            Quartet<Function<Double[], Double>, Double, Double, Integer>
+            Quartet<BenchmarkFunction<Double[], Double>, Double, Double, Integer>
         > objectiveFunctionsND = new ArrayList<>();
 
         objectiveFunctionsND.add(new Quartet<>(new Ackley(), -32.768, 32.768, 6));
-        objectiveFunctionsND.add(new Quartet<>(new AlpineN2(), 0D, 10D, 8));
+        objectiveFunctionsND.add(new Quartet<>(new AlpineN2(8), 0D, 10D, 8));
         objectiveFunctionsND.add(new Quartet<>(new Griewank(), -600D, 600D, 10));
         objectiveFunctionsND.add(new Quartet<>(new Rastrigin(), -5.12, 5.12, 4));
         objectiveFunctionsND.add(new Quartet<>(new Schwefel(), -500D, 500D, 10));
         objectiveFunctionsND.add(new Quartet<>(new Sphere(), -5.12, 5.12, 8));
 
         for (Quartet<
-            Function<Double[], Double>,
+                BenchmarkFunction<Double[], Double>,
             Double,
             Double,
             Integer
@@ -60,7 +60,7 @@ public class App {
         }
 
         ArrayList<
-            Triplet<Function<Pair<Double, Double>, Double>, Double, Double>
+            Triplet<BenchmarkFunction<Pair<Double, Double>, Double>, Double, Double>
         > objectiveFunctions2D = new ArrayList<>();
 
         objectiveFunctions2D.add(new Triplet<>(new Bohachevsky(), -100D, 100D));
@@ -71,7 +71,7 @@ public class App {
         objectiveFunctions2D.add(new Triplet<>(new LevyN13(), -5.12, 5.12));
 
         for (Triplet<
-            Function<Pair<Double, Double>, Double>,
+            BenchmarkFunction<Pair<Double, Double>, Double>,
             Double,
             Double
         > objectiveFunction : objectiveFunctions2D) {

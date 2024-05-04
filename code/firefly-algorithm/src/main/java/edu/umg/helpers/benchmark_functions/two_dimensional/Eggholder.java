@@ -1,9 +1,10 @@
 package edu.umg.helpers.benchmark_functions.two_dimensional;
 
-import java.util.function.Function;
+
+import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
 import org.javatuples.Pair;
 
-public class Eggholder implements Function<Pair<Double, Double>, Double> {
+public class Eggholder implements BenchmarkFunction<Pair<Double, Double>, Double> {
 
     @Override
     public Double apply(Pair<Double, Double> args) {
@@ -16,5 +17,10 @@ public class Eggholder implements Function<Pair<Double, Double>, Double> {
             Math.sqrt(Math.abs(args.getValue0() - (args.getValue1() + 47)))
         );
         return term1 * term2 + term3 * term4;
+    }
+
+    @Override
+    public Double[] getExtremes() {
+        return new Double[] {-959.6406627106155};
     }
 }
