@@ -21,9 +21,9 @@ public interface Experiment {
 
     default String getTime(double seconds) {
         return (
-                String.format("%02d:", (long) seconds / (216000)) +
-                        String.format("%02d:", (long) seconds / (3600)) +
-                        String.format("%02d", (long) seconds / (60))
+                String.format("%02d:", (long) seconds / (3600)) +
+                        String.format("%02d:", (long) (seconds % 3600) /60) +
+                        String.format("%02d", (long) seconds % 60)
         );
     }
 }

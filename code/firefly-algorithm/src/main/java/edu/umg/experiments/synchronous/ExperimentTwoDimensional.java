@@ -222,9 +222,9 @@ public class ExperimentTwoDimensional implements Experiment {
             writer.printf("%f1.6;", StatUtils.max(allValues));
             writer.printf("%f1.6;", StatUtils.min(allValues));
             writer.printf("%f1.6;", StatUtils.mean(allValues));
-            writer.print(getTime(StatUtils.max(times)));
-            writer.print(getTime(StatUtils.min(times)));
-            writer.print(getTime(StatUtils.mean(times)));
+            writer.print(getTime(StatUtils.max(times))+ ";");
+            writer.print(getTime(StatUtils.min(times))+ ";");
+            writer.print(getTime(StatUtils.mean(times))+ ";");
             writer.printf("%f1.2\n", Math.round((numberOfReaches / (double) numberOfRuns) * 10000.0) / 100.0);
         } catch (Exception e) {
             System.out.println(e);
