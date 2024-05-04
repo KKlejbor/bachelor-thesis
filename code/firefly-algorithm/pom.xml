@@ -101,7 +101,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>com.example.Main</mainClass>
+              <mainClass>edu.umg.App</mainClass>
             </manifest>
           </archive>
         </configuration>
