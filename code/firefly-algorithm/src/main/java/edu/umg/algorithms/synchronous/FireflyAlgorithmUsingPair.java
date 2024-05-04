@@ -2,13 +2,14 @@ package edu.umg.algorithms.synchronous;
 
 import edu.umg.algorithms.synchronous.objects.FireflyUsingPair;
 import edu.umg.helpers.Iteration;
-import edu.umg.helpers.Negative;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.Function;
+
+import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
 import org.javatuples.Pair;
 
 public class FireflyAlgorithmUsingPair {
 
+    private static final double THRESHOLD = 0.00001;
     private final double maximalAttractiveness;
     private final double lightAbsorptionCoefficient;
     private final double reductionCoefficient;
@@ -16,7 +17,7 @@ public class FireflyAlgorithmUsingPair {
     private final int maximumNumberOfGenerations;
     private final Iteration[] iterations;
     private final Double[][][] locations;
-    private final Function<Pair<Double, Double>, Double> objectiveFunction;
+    private final BenchmarkFunction<Pair<Double, Double>, Double> objectiveFunction;
     private final boolean minimalize;
     private final double lowerBound;
     private final double upperBound;
@@ -33,7 +34,7 @@ public class FireflyAlgorithmUsingPair {
         double reductionCoefficient,
         int populationSize,
         int maximumNumberOfGenerations,
-        Function<Pair<Double, Double>, Double> objectiveFunction,
+        BenchmarkFunction<Pair<Double, Double>, Double> objectiveFunction,
         double lowerBound,
         double upperBound,
         boolean minimalize
@@ -44,9 +45,7 @@ public class FireflyAlgorithmUsingPair {
         this.reductionCoefficient = reductionCoefficient;
         this.populationSize = populationSize;
         this.maximumNumberOfGenerations = maximumNumberOfGenerations;
-        this.objectiveFunction = minimalize
-            ? objectiveFunction.andThen(new Negative())
-            : objectiveFunction;
+        this.objectiveFunction = objectiveFunction;
         this.lowerBound = lowerBound;
         this.upperBound = upperBound;
         this.minimalize = minimalize;
@@ -63,7 +62,7 @@ public class FireflyAlgorithmUsingPair {
         for (int n = 0; n < maximumNumberOfGenerations; n++) {
             for (int i = 0; i < populationSize; i++) {
                 for (int j = 0; j < populationSize; j++) {
-                    if (population[i].getIntensity() < population[j].getIntensity()) {
+                    if (population[i].getIntensity(minimalize) < population[j].getIntensity(minimalize)) {
                         population[i] = new FireflyUsingPair(
                             computeNewLocation(i, j),
                             objectiveFunction
@@ -71,20 +70,17 @@ public class FireflyAlgorithmUsingPair {
                     }
                 }
 
-                if (population[i].getIntensity() > theBestSolution.getIntensity()) {
+                if (population[i].getIntensity(minimalize) > theBestSolution.getIntensity(minimalize)) {
                     theBestSolution = population[i];
                     locationOfTheBestSolution = i;
 
-                    if (theBestSolution.getIntensity() > finalSolution.getIntensity()) {
+                    if (theBestSolution.getIntensity(minimalize) > finalSolution.getIntensity(minimalize)) {
                         finalSolution = theBestSolution.getCopy();
                     }
                 }
             }
 
-            theBestSolution = new FireflyUsingPair(
-                computeNewLocation(),
-                objectiveFunction
-            );
+            theBestSolution = new FireflyUsingPair(computeNewLocation(), objectiveFunction);
             reduceRandomStepCoefficient();
             addIteration(n + 1);
             addLocationAt(n + 1);
@@ -112,7 +108,7 @@ public class FireflyAlgorithmUsingPair {
         theBestSolution = population[0];
 
         for (int i = 1; i < populationSize; i++) {
-            if (population[i].getIntensity() > theBestSolution.getIntensity()) {
+            if (population[i].getIntensity(minimalize) > theBestSolution.getIntensity(minimalize)) {
                 locationOfTheBestSolution = i;
                 theBestSolution = population[locationOfTheBestSolution];
             }
@@ -207,18 +203,11 @@ public class FireflyAlgorithmUsingPair {
     private void addIteration(int index) {
         double result = 0;
 
-        Negative Negative = new Negative();
-
         for (FireflyUsingPair firefly : population) {
             result += firefly.getIntensity();
         }
 
-        iterations[index] = new Iteration(
-            minimalize ? Negative.apply(result) : result,
-            minimalize
-                ? Negative.apply(finalSolution.getIntensity())
-                : finalSolution.getIntensity()
-        );
+        iterations[index] = new Iteration(result, finalSolution.getIntensity());
     }
 
     private void addLocationAt(int index) {
@@ -230,10 +219,36 @@ public class FireflyAlgorithmUsingPair {
     }
 
     public FireflyUsingPair getFinalSolution() {
-        return finalSolution.getCopy(minimalize);
+        return finalSolution.getCopy();
     }
 
     public Double[][][] getLocations() {
         return locations;
+    }
+
+    public double[] getIntensities() {
+        double[] intensities = new double[populationSize];
+
+        for (int i = 0; i < populationSize; i++) {
+            intensities[i] = population[i].getIntensity();
+        }
+
+        return intensities;
+    }
+
+    public boolean hasReachedTheGoal(){
+        Double[] extremes = objectiveFunction.getExtremes();
+
+        for (int i = 0; i < populationSize; i++) {
+            for (int j = 0; j < extremes.length; j++) {
+                return areFloatsEqual(population[i].getIntensity(), extremes[j]);
+            }
+        }
+
+        return false;
+    }
+
+    private boolean areFloatsEqual(double d1, double d2){
+        return Math.abs(d1 - d2) < THRESHOLD;
     }
 }

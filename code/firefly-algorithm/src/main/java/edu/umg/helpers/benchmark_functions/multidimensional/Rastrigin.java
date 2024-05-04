@@ -1,8 +1,8 @@
 package edu.umg.helpers.benchmark_functions.multidimensional;
 
-import java.util.function.Function;
+import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
 
-public class Rastrigin implements Function<Double[], Double> {
+public class Rastrigin implements BenchmarkFunction<Double[], Double> {
 
     @Override
     public Double apply(Double[] args) {
@@ -13,5 +13,10 @@ public class Rastrigin implements Function<Double[], Double> {
         }
 
         return result;
+    }
+
+    @Override
+    public Double[] getExtremes() {
+        return new Double[] {0D};
     }
 }

@@ -1,9 +1,10 @@
 package edu.umg.helpers.benchmark_functions.multidimensional;
 
-import java.util.Arrays;
-import java.util.function.Function;
+import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
 
-public class Ackley implements Function<Double[], Double> {
+import java.util.Arrays;
+
+public class Ackley implements BenchmarkFunction<Double[], Double> {
 
     @Override
     public Double apply(Double[] args) {
@@ -17,5 +18,10 @@ public class Ackley implements Function<Double[], Double> {
         double term2 = Math.exp(subTerm2 / (double) args.length);
 
         return -20 * term1 - term2 + 20 + Math.E;
+    }
+
+    @Override
+    public Double[] getExtremes() {
+        return new Double[] {0D};
     }
 }

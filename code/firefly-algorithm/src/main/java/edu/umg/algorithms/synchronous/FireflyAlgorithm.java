@@ -2,7 +2,8 @@ package edu.umg.algorithms.synchronous;
 
 import edu.umg.algorithms.synchronous.objects.Firefly;
 import edu.umg.helpers.Iteration;
-import edu.umg.helpers.Negative;
+import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
+
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 
@@ -15,7 +16,7 @@ public class FireflyAlgorithm {
     private final int maximumNumberOfGenerations;
     private final Iteration[] iterations;
     private final Double[][][] locations;
-    private final Function<Double[], Double> objectiveFunction;
+    private final BenchmarkFunction<Double[], Double> objectiveFunction;
     private final int numberOfDimensions;
     private final boolean minimalize;
     private final double lowerBound;
@@ -24,6 +25,7 @@ public class FireflyAlgorithm {
     private Firefly[] population;
     private Firefly currentBestSolution;
     private Firefly theBestSolution;
+    private final double THRESHOLD = 0.00001;
 
     public FireflyAlgorithm(
         double maximalAttractiveness,
@@ -32,7 +34,7 @@ public class FireflyAlgorithm {
         double reductionCoefficient,
         int populationSize,
         int maximumNumberOfGenerations,
-        Function<Double[], Double> objectiveFunction,
+        BenchmarkFunction<Double[], Double> objectiveFunction,
         int numberOfDimensions,
         double lowerBound,
         double upperBound,
@@ -44,9 +46,7 @@ public class FireflyAlgorithm {
         this.reductionCoefficient = reductionCoefficient;
         this.populationSize = populationSize;
         this.maximumNumberOfGenerations = maximumNumberOfGenerations;
-        this.objectiveFunction = minimalize
-            ? objectiveFunction.andThen(new Negative())
-            : objectiveFunction;
+        this.objectiveFunction = objectiveFunction;
         this.numberOfDimensions = numberOfDimensions;
         this.lowerBound = lowerBound;
         this.upperBound = upperBound;
@@ -65,7 +65,7 @@ public class FireflyAlgorithm {
         for (int n = 0; n < maximumNumberOfGenerations; n++) {
             for (int i = 0; i < populationSize; i++) {
                 for (int j = 0; j < populationSize; j++) {
-                    if (population[i].getIntensity() < population[j].getIntensity()) {
+                    if (population[i].getIntensity(minimalize) < population[j].getIntensity(minimalize)) {
                         population[i] = new Firefly(
                             computeNewLocation(i, j),
                             objectiveFunction
@@ -73,10 +73,10 @@ public class FireflyAlgorithm {
                     }
                 }
 
-                if (population[i].getIntensity() > currentBestSolution.getIntensity()) {
+                if (population[i].getIntensity(minimalize) > currentBestSolution.getIntensity(minimalize)) {
                     currentBestSolution = population[i].getCopy();
 
-                    if (population[i].getIntensity() > theBestSolution.getIntensity()) {
+                    if (population[i].getIntensity(minimalize) > theBestSolution.getIntensity(minimalize)) {
                         theBestSolution = currentBestSolution.getCopy();
                     }
                 }
@@ -111,8 +111,8 @@ public class FireflyAlgorithm {
 
         for (int i = 1; i < populationSize; i++) {
             if (
-                population[i].getIntensity() >
-                population[locationOfTheBestSolution].getIntensity()
+                population[i].getIntensity(minimalize) >
+                population[locationOfTheBestSolution].getIntensity(minimalize)
             ) {
                 locationOfTheBestSolution = i;
                 currentBestSolution = population[locationOfTheBestSolution];
@@ -196,18 +196,11 @@ public class FireflyAlgorithm {
     private void addIteration(int index) {
         double result = 0;
 
-        Negative Negative = new Negative();
-
         for (Firefly firefly : population) {
             result += firefly.getIntensity();
         }
 
-        iterations[index] = new Iteration(
-            minimalize ? Negative.apply(result) : result,
-            minimalize
-                ? Negative.apply(theBestSolution.getIntensity())
-                : theBestSolution.getIntensity()
-        );
+        iterations[index] = new Iteration(result, theBestSolution.getIntensity());
     }
 
     private void addLocationAt(int index) {
@@ -223,15 +216,36 @@ public class FireflyAlgorithm {
     }
 
     public Firefly getFinalSolution() {
-        return theBestSolution.getCopy(minimalize);
+        return theBestSolution.getCopy();
     }
 
     public Double[][][] getLocations() {
         return locations;
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
+    public double[] getIntensities() {
+        double[] intensities = new double[populationSize];
+
+        for (int i = 0; i < populationSize; i++) {
+            intensities[i] = population[i].getIntensity();
+        }
+
+        return intensities;
+    }
+
+    public boolean hasReachedTheGoal(){
+        Double[] extremes = objectiveFunction.getExtremes();
+
+        for (int i = 0; i < populationSize; i++) {
+            for (int j = 0; j < extremes.length; j++) {
+                return areFloatsEqual(population[i].getIntensity(), extremes[j]);
+            }
+        }
+
+        return false;
+    }
+
+    private boolean areFloatsEqual(double d1, double d2){
+        return Math.abs(d1 - d2) < THRESHOLD;
     }
 }
