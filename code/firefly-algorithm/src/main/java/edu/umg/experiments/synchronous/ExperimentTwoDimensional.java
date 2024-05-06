@@ -135,8 +135,12 @@ public class ExperimentTwoDimensional implements Experiment {
             try (
                 PrintWriter writer = new PrintWriter(
                     String.format(
-                        "results/%s/%s_a_%s_d%s_Pop_%d_Iter_%s__run_%d_values.csv",
-                        objectiveFunction.getClass().getSimpleName(),
+                        "results/%s_a_%s_d_%s_Pop_%d_Iter_%d/%s_a_%s_d_%s_Pop_%d_Iter_%d_run_%d_values.csv",
+                            objectiveFunction.getClass().getSimpleName(),
+                            getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
+                            getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
+                            populationSize,
+                            maximumNumberOfGenerations,
                         objectiveFunction.getClass().getSimpleName(),
                         getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
                         getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
@@ -180,13 +184,17 @@ public class ExperimentTwoDimensional implements Experiment {
         try (
             PrintWriter writer = new PrintWriter(
                 String.format(
-                    "results/%s/%s_a_%s_d_%s_Pop_%d_Iter_%s.csv",
-                    objectiveFunction.getClass().getSimpleName(),
-                    objectiveFunction.getClass().getSimpleName(),
-                    getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
-                    getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
-                    populationSize,
-                    maximumNumberOfGenerations
+                    "results/%s_a_%s_d_%s_Pop_%d_Iter_%d/%s_a_%s_d_%s_Pop_%d_Iter_%d.csv",
+                        objectiveFunction.getClass().getSimpleName(),
+                        getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
+                        getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
+                        populationSize,
+                        maximumNumberOfGenerations,
+                        objectiveFunction.getClass().getSimpleName(),
+                        getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
+                        getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
+                        populationSize,
+                        maximumNumberOfGenerations
                 )
             )
         ) {
@@ -205,13 +213,17 @@ public class ExperimentTwoDimensional implements Experiment {
         try (
             PrintWriter writer = new PrintWriter(
                 String.format(
-                    "results/%s/%s_a_%s_d_%s_Pop_%d_Iter_%s_locations.csv",
-                    objectiveFunction.getClass().getSimpleName(),
-                    objectiveFunction.getClass().getSimpleName(),
-                    getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
-                    getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
-                    populationSize,
-                    maximumNumberOfGenerations
+                    "results/%s_a_%s_d_%s_Pop_%d_Iter_%d/%s_a_%s_d_%s_Pop_%d_Iter_%d_locations.csv",
+                        objectiveFunction.getClass().getSimpleName(),
+                        getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
+                        getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
+                        populationSize,
+                        maximumNumberOfGenerations,
+                        objectiveFunction.getClass().getSimpleName(),
+                        getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
+                        getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
+                        populationSize,
+                        maximumNumberOfGenerations
                 )
             )
         ) {
@@ -234,13 +246,17 @@ public class ExperimentTwoDimensional implements Experiment {
         try (
             PrintWriter writer = new PrintWriter(
                 String.format(
-                    "results/%s/%s_a_%s_d_%s_Pop_%d_Iter_%s_stats.csv",
-                    objectiveFunction.getClass().getSimpleName(),
-                    objectiveFunction.getClass().getSimpleName(),
-                    getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
-                    getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
-                    populationSize,
-                    maximumNumberOfGenerations
+                    "results/%s_a_%s_d_%s_Pop_%d_Iter_%d/%s_a_%s_d_%s_Pop_%d_Iter_%d_stats.csv",
+                        objectiveFunction.getClass().getSimpleName(),
+                        getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
+                        getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
+                        populationSize,
+                        maximumNumberOfGenerations,
+                        objectiveFunction.getClass().getSimpleName(),
+                        getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
+                        getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
+                        populationSize,
+                        maximumNumberOfGenerations
                 )
             )
         ) {

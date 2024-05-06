@@ -72,7 +72,7 @@ public class ExperimentMultidimensional implements Experiment {
 
         File resultDir = new File(
             String.format(
-                "results/%s_a_%s_d%s_Pop_%d_Iter_%s/",
+                "results/%s_a_%s_d_%s_Pop_%d_Iter_%s/",
                 objectiveFunction.getClass().getSimpleName(),
                 getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
                 getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
@@ -102,6 +102,7 @@ public class ExperimentMultidimensional implements Experiment {
             Instant stop = Instant.now();
 
             times[i] = Duration.between(start, stop).getSeconds();
+            values[i] = fireflyAlgorithm.getIntensities();
 
             System.out.printf(
                 "\nFunkcja %s, alpha = %1.3f, delta = %1.3f, gamma = %1.3f, pop = %d, podejście %d.: %s\nNajlepsze rozwiązanie: \n%s\n\n",
@@ -158,13 +159,18 @@ public class ExperimentMultidimensional implements Experiment {
         try (
             PrintWriter writer = new PrintWriter(
                 String.format(
-                    "results/%s/%s_a_%s_d_%s_Pop_%d_Iter_%s.csv",
-                    objectiveFunction.getClass().getSimpleName(),
-                    objectiveFunction.getClass().getSimpleName(),
-                    getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
-                    getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
-                    populationSize,
-                    maximumNumberOfGenerations
+                    "results/%s_a_%s_d_%s_Pop_%d_Iter_%d/%s_a_%s_d_%s_Pop_%d_Iter_%d.csv",
+                        objectiveFunction.getClass().getSimpleName(),
+                        getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
+                        getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
+                        populationSize,
+                        maximumNumberOfGenerations,
+                        objectiveFunction.getClass().getSimpleName(),
+                        getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
+                        getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
+                        populationSize,
+                        maximumNumberOfGenerations
+
                 )
             )
         ) {
@@ -183,13 +189,17 @@ public class ExperimentMultidimensional implements Experiment {
         try (
             PrintWriter writer = new PrintWriter(
                 String.format(
-                    "results/%s/%s_a_%s_d_%s_Pop_%d_Iter_%s_stats.csv",
-                    objectiveFunction.getClass().getSimpleName(),
-                    objectiveFunction.getClass().getSimpleName(),
-                    getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
-                    getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
-                    populationSize,
-                    maximumNumberOfGenerations
+                    "results/%s_a_%s_d_%s_Pop_%d_Iter_%d/%s_a_%s_d_%s_Pop_%d_Iter_%d_stats.csv",
+                        objectiveFunction.getClass().getSimpleName(),
+                        getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
+                        getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
+                        populationSize,
+                        maximumNumberOfGenerations,
+                        objectiveFunction.getClass().getSimpleName(),
+                        getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
+                        getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
+                        populationSize,
+                        maximumNumberOfGenerations
                 )
             )
         ) {
