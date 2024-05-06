@@ -17,6 +17,11 @@ public class Rastrigin implements BenchmarkFunction<Double[], Double> {
 
     @Override
     public Double[] getExtremes() {
-        return new Double[] {0D};
+        return new Double[] { 0D };
+    }
+
+    @Override
+    public BenchmarkFunction<Double[], Double> getCopy() {
+        return new Rastrigin();
     }
 }

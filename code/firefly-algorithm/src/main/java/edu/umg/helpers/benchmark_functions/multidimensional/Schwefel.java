@@ -1,7 +1,6 @@
 package edu.umg.helpers.benchmark_functions.multidimensional;
 
 import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
-
 import java.util.Arrays;
 
 public class Schwefel implements BenchmarkFunction<Double[], Double> {
@@ -19,6 +18,11 @@ public class Schwefel implements BenchmarkFunction<Double[], Double> {
 
     @Override
     public Double[] getExtremes() {
-        return new Double[] {0D};
+        return new Double[] { 0D };
+    }
+
+    @Override
+    public BenchmarkFunction<Double[], Double> getCopy() {
+        return new Schwefel();
     }
 }

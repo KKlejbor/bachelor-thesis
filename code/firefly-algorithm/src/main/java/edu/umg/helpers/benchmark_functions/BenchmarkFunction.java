@@ -4,4 +4,5 @@ import java.util.function.Function;
 
 public interface BenchmarkFunction<T, R> extends Function<T, R> {
     R[] getExtremes();
+    BenchmarkFunction<T, R> getCopy();
 }

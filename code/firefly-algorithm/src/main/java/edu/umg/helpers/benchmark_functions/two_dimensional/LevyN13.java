@@ -17,6 +17,11 @@ public class LevyN13 implements BenchmarkFunction<Pair<Double, Double>, Double> 
 
     @Override
     public Double[] getExtremes() {
-        return new Double[] {0D};
+        return new Double[] { 0D };
+    }
+
+    @Override
+    public BenchmarkFunction<Pair<Double, Double>, Double> getCopy() {
+        return new LevyN13();
     }
 }

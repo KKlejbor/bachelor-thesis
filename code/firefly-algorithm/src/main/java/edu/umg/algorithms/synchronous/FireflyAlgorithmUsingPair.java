@@ -2,9 +2,8 @@ package edu.umg.algorithms.synchronous;
 
 import edu.umg.algorithms.synchronous.objects.FireflyUsingPair;
 import edu.umg.helpers.Iteration;
-import java.util.concurrent.ThreadLocalRandom;
-
 import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
+import java.util.concurrent.ThreadLocalRandom;
 import org.javatuples.Pair;
 
 public class FireflyAlgorithmUsingPair {
@@ -26,6 +25,7 @@ public class FireflyAlgorithmUsingPair {
     private int locationOfTheBestSolution;
     private FireflyUsingPair theBestSolution;
     private FireflyUsingPair finalSolution;
+    private int currentRun = 0;
 
     public FireflyAlgorithmUsingPair(
         double maximalAttractiveness,
@@ -58,11 +58,15 @@ public class FireflyAlgorithmUsingPair {
         findTheBestSolution();
         addIteration(0);
         addLocationAt(0);
+        int numberOfRunsWithoutImprovements = 5;
 
-        for (int n = 0; n < maximumNumberOfGenerations; n++) {
+        while (currentRun < maximumNumberOfGenerations) {
             for (int i = 0; i < populationSize; i++) {
                 for (int j = 0; j < populationSize; j++) {
-                    if (population[i].getIntensity(minimalize) < population[j].getIntensity(minimalize)) {
+                    if (
+                        population[i].getIntensity(minimalize) <
+                        population[j].getIntensity(minimalize)
+                    ) {
                         population[i] = new FireflyUsingPair(
                             computeNewLocation(i, j),
                             objectiveFunction
@@ -70,20 +74,34 @@ public class FireflyAlgorithmUsingPair {
                     }
                 }
 
-                if (population[i].getIntensity(minimalize) > theBestSolution.getIntensity(minimalize)) {
+                if (
+                    population[i].getIntensity(minimalize) >
+                    theBestSolution.getIntensity(minimalize)
+                ) {
                     theBestSolution = population[i];
                     locationOfTheBestSolution = i;
 
-                    if (theBestSolution.getIntensity(minimalize) > finalSolution.getIntensity(minimalize)) {
+                    if (
+                        theBestSolution.getIntensity(minimalize) >
+                        finalSolution.getIntensity(minimalize)
+                    ) {
                         finalSolution = theBestSolution.getCopy();
+                        numberOfRunsWithoutImprovements = 5;
+                    }
+
+                    if (numberOfRunsWithoutImprovements-- == 0) {
+                        break;
                     }
                 }
             }
 
-            theBestSolution = new FireflyUsingPair(computeNewLocation(), objectiveFunction);
+            theBestSolution = new FireflyUsingPair(
+                computeNewLocation(),
+                objectiveFunction
+            );
             reduceRandomStepCoefficient();
-            addIteration(n + 1);
-            addLocationAt(n + 1);
+            addIteration(currentRun + 1);
+            addLocationAt(currentRun + 1);
         }
 
         return iterations;
@@ -108,7 +126,10 @@ public class FireflyAlgorithmUsingPair {
         theBestSolution = population[0];
 
         for (int i = 1; i < populationSize; i++) {
-            if (population[i].getIntensity(minimalize) > theBestSolution.getIntensity(minimalize)) {
+            if (
+                population[i].getIntensity(minimalize) >
+                theBestSolution.getIntensity(minimalize)
+            ) {
                 locationOfTheBestSolution = i;
                 theBestSolution = population[locationOfTheBestSolution];
             }
@@ -236,7 +257,7 @@ public class FireflyAlgorithmUsingPair {
         return intensities;
     }
 
-    public boolean hasReachedTheGoal(){
+    public boolean hasReachedTheGoal() {
         Double[] extremes = objectiveFunction.getExtremes();
 
         for (int i = 0; i < populationSize; i++) {
@@ -248,7 +269,11 @@ public class FireflyAlgorithmUsingPair {
         return false;
     }
 
-    private boolean areFloatsEqual(double d1, double d2){
+    private boolean areFloatsEqual(double d1, double d2) {
         return Math.abs(d1 - d2) < THRESHOLD;
+    }
+
+    public int getCurrentRun() {
+        return currentRun;
     }
 }

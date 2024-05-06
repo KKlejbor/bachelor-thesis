@@ -1,6 +1,5 @@
 package edu.umg.helpers.benchmark_functions.two_dimensional;
 
-
 import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
 import org.javatuples.Pair;
 
@@ -19,6 +18,11 @@ public class Bohachevsky implements BenchmarkFunction<Pair<Double, Double>, Doub
 
     @Override
     public Double[] getExtremes() {
-        return new Double[] {0D};
+        return new Double[] { 0D };
+    }
+
+    @Override
+    public BenchmarkFunction<Pair<Double, Double>, Double> getCopy() {
+        return new Bohachevsky();
     }
 }

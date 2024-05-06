@@ -1,15 +1,12 @@
 package edu.umg.experiments.synchronous;
 
 import edu.umg.algorithms.synchronous.FireflyAlgorithmUsingPair;
-import edu.umg.algorithms.synchronous.objects.FireflyUsingPair;
 import edu.umg.helpers.Iteration;
-
+import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
 import java.io.File;
 import java.io.PrintWriter;
 import java.time.Duration;
 import java.time.Instant;
-
-import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
 import org.apache.commons.math3.stat.StatUtils;
 import org.javatuples.Pair;
 
@@ -61,8 +58,27 @@ public class ExperimentTwoDimensional implements Experiment {
         double[][] values = new double[numberOfRuns][];
         double[] times = new double[numberOfRuns];
         int numberOfReaches = 0;
+        int end = maximumNumberOfGenerations + 1;
 
-        File resultDir = new File(String.format("results/%s/", objectiveFunction.getClass().getSimpleName()));
+        System.out.printf(
+            "Wystartował eksperyment -- Funkcja %s, alpha = %1.3f, delta = %1.3f, gamma = %1.3f, pop = %d\n",
+            objectiveFunction.getClass().getSimpleName(),
+            randomStepCoefficient,
+            randomStepReductionCoefficient,
+            lightAbsorptionCoefficient,
+            populationSize
+        );
+
+        File resultDir = new File(
+            String.format(
+                "results/%s_a_%s_d%s_Pop_%d_Iter_%s/",
+                objectiveFunction.getClass().getSimpleName(),
+                getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
+                getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
+                populationSize,
+                maximumNumberOfGenerations
+            )
+        );
         resultDir.mkdirs();
 
         for (int i = 0; i < numberOfRuns; i++) {
@@ -80,9 +96,9 @@ public class ExperimentTwoDimensional implements Experiment {
             );
 
             System.out.printf(
-                    "Funkcja %s, podejście %d.: ",
-                    objectiveFunction.getClass().getSimpleName(),
-                    i + 1
+                "Funkcja %s, podejście %d.: ",
+                objectiveFunction.getClass().getSimpleName(),
+                i + 1
             );
 
             Instant start = Instant.now();
@@ -91,28 +107,44 @@ public class ExperimentTwoDimensional implements Experiment {
 
             times[i] = Duration.between(start, stop).getSeconds();
 
-            System.out.println("ukończone " + getTime(times[i]));
+            System.out.printf(
+                "\nFunkcja %s, alpha = %1.3f, delta = %1.3f, gamma = %1.3f, pop = %d, podejście %d.: %s\nNajlepsze rozwiązanie: \n%s\n\n",
+                objectiveFunction.getClass().getSimpleName(),
+                randomStepCoefficient,
+                randomStepReductionCoefficient,
+                lightAbsorptionCoefficient,
+                populationSize,
+                i + 1,
+                fireflyAlgorithm.getFinalSolution()
+            );
+
             locations[i] = fireflyAlgorithm.getLocations();
 
             values[i] = fireflyAlgorithm.getIntensities();
 
-            if(fireflyAlgorithm.hasReachedTheGoal()){
+            if (fireflyAlgorithm.hasReachedTheGoal()) {
                 numberOfReaches++;
             }
 
+            int localEnd = fireflyAlgorithm.getCurrentRun();
+
+            if (localEnd < end) {
+                end = localEnd;
+            }
+
             try (
-                    PrintWriter writer = new PrintWriter(
-                            String.format(
-                                    "results/%s/%s_a_%s_d_%s_Pop_%d_Iter_%s_run_%d_values.csv",
-                                    objectiveFunction.getClass().getSimpleName(),
-                                    objectiveFunction.getClass().getSimpleName(),
-                                    getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
-                                    getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
-                                    populationSize,
-                                    maximumNumberOfGenerations,
-                                    i
-                            )
+                PrintWriter writer = new PrintWriter(
+                    String.format(
+                        "results/%s/%s_a_%s_d%s_Pop_%d_Iter_%s__run_%d_values.csv",
+                        objectiveFunction.getClass().getSimpleName(),
+                        objectiveFunction.getClass().getSimpleName(),
+                        getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
+                        getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
+                        populationSize,
+                        maximumNumberOfGenerations,
+                        i
                     )
+                )
             ) {
                 for (int j = 0; j < values.length; j++) {
                     writer.printf("%f1.6\n", values[i][j]);
@@ -120,11 +152,6 @@ public class ExperimentTwoDimensional implements Experiment {
             } catch (Exception e) {
                 System.out.println(e);
             }
-
-            FireflyUsingPair finalSolution = fireflyAlgorithm.getFinalSolution();
-
-
-            System.out.printf("Najlepsze rozwiązanie: \n%s\n\n", finalSolution);
         }
 
         Iteration[] results = new Iteration[maximumNumberOfGenerations + 1];
@@ -155,7 +182,7 @@ public class ExperimentTwoDimensional implements Experiment {
                 String.format(
                     "results/%s/%s_a_%s_d_%s_Pop_%d_Iter_%s.csv",
                     objectiveFunction.getClass().getSimpleName(),
-                        objectiveFunction.getClass().getSimpleName(),
+                    objectiveFunction.getClass().getSimpleName(),
                     getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
                     getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
                     populationSize,
@@ -205,27 +232,32 @@ public class ExperimentTwoDimensional implements Experiment {
         }
 
         try (
-                PrintWriter writer = new PrintWriter(
-                        String.format(
-                                "results/%s/%s_a_%s_d_%s_Pop_%d_Iter_%s_stats.csv",
-                                objectiveFunction.getClass().getSimpleName(),
-                                objectiveFunction.getClass().getSimpleName(),
-                                getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
-                                getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
-                                populationSize,
-                                maximumNumberOfGenerations
-                        )
+            PrintWriter writer = new PrintWriter(
+                String.format(
+                    "results/%s/%s_a_%s_d_%s_Pop_%d_Iter_%s_stats.csv",
+                    objectiveFunction.getClass().getSimpleName(),
+                    objectiveFunction.getClass().getSimpleName(),
+                    getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
+                    getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
+                    populationSize,
+                    maximumNumberOfGenerations
                 )
+            )
         ) {
-            writer.println("max;min;standard;avg;max_time;min_time;avg_time;reached_percent");
+            writer.println(
+                "max;min;standard;avg;max_time;min_time;avg_time;reached_percent"
+            );
             double[] allValues = flatten(values);
             writer.printf("%f1.6;", StatUtils.max(allValues));
             writer.printf("%f1.6;", StatUtils.min(allValues));
             writer.printf("%f1.6;", StatUtils.mean(allValues));
-            writer.print(getTime(StatUtils.max(times))+ ";");
-            writer.print(getTime(StatUtils.min(times))+ ";");
-            writer.print(getTime(StatUtils.mean(times))+ ";");
-            writer.printf("%f1.2\n", Math.round((numberOfReaches / (double) numberOfRuns) * 10000.0) / 100.0);
+            writer.print(getTime(StatUtils.max(times)) + ";");
+            writer.print(getTime(StatUtils.min(times)) + ";");
+            writer.print(getTime(StatUtils.mean(times)) + ";");
+            writer.printf(
+                "%f1.2\n",
+                Math.round((numberOfReaches / (double) numberOfRuns) * 10000.0) / 100.0
+            );
         } catch (Exception e) {
             System.out.println(e);
         }
