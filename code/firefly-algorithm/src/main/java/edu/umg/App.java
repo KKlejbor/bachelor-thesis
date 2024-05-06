@@ -103,7 +103,7 @@ public class App {
                                 randomStepCoefficient,
                                 randomStepReductionCoefficient,
                                 populationSize,
-                                200,
+                                2000,
                                 10,
                                 true,
                                 objectiveFunction.getValue1(),
