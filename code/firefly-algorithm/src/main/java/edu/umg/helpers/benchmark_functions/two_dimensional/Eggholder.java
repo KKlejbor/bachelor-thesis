@@ -1,6 +1,5 @@
 package edu.umg.helpers.benchmark_functions.two_dimensional;
 
-
 import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
 import org.javatuples.Pair;
 
@@ -21,6 +20,11 @@ public class Eggholder implements BenchmarkFunction<Pair<Double, Double>, Double
 
     @Override
     public Double[] getExtremes() {
-        return new Double[] {-959.6406627106155};
+        return new Double[] { -959.6406627106155 };
+    }
+
+    @Override
+    public BenchmarkFunction<Pair<Double, Double>, Double> getCopy() {
+        return new Eggholder();
     }
 }
