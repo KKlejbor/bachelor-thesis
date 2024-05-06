@@ -1,21 +1,28 @@
 package edu.umg.algorithms.synchronous.objects;
 
 import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
-
 import java.text.DecimalFormat;
 import java.util.Arrays;
 
-public record Firefly(Double[] location, BenchmarkFunction<Double[], Double> objectiveFunction) {
-    public Double getIntensity(){
+public record Firefly(
+    Double[] location,
+    BenchmarkFunction<Double[], Double> objectiveFunction
+) {
+    public Double getIntensity() {
         return getIntensity(false);
     }
 
-    public Double getIntensity(boolean invert){
-        return invert ? objectiveFunction.apply(location) * -1D : objectiveFunction.apply(location);
+    public Double getIntensity(boolean invert) {
+        return invert
+            ? objectiveFunction.apply(location) * -1D
+            : objectiveFunction.apply(location);
     }
 
     public Firefly getCopy() {
-        return new Firefly(Arrays.copyOf(location, location.length), objectiveFunction);
+        return new Firefly(
+            Arrays.copyOf(location, location.length),
+            objectiveFunction.getCopy()
+        );
     }
 
     @Override

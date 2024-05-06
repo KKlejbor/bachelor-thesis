@@ -3,9 +3,7 @@ package edu.umg.algorithms.synchronous;
 import edu.umg.algorithms.synchronous.objects.Firefly;
 import edu.umg.helpers.Iteration;
 import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
-
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.Function;
 
 public class FireflyAlgorithm {
 
@@ -26,6 +24,7 @@ public class FireflyAlgorithm {
     private Firefly currentBestSolution;
     private Firefly theBestSolution;
     private final double THRESHOLD = 0.00001;
+    private int currentRun = 0;
 
     public FireflyAlgorithm(
         double maximalAttractiveness,
@@ -61,11 +60,15 @@ public class FireflyAlgorithm {
         findTheBestSolution();
         addIteration(0);
         addLocationAt(0);
+        int numberOfRunsWithoutImprovements = 5;
 
-        for (int n = 0; n < maximumNumberOfGenerations; n++) {
+        while (currentRun < maximumNumberOfGenerations) {
             for (int i = 0; i < populationSize; i++) {
                 for (int j = 0; j < populationSize; j++) {
-                    if (population[i].getIntensity(minimalize) < population[j].getIntensity(minimalize)) {
+                    if (
+                        population[i].getIntensity(minimalize) <
+                        population[j].getIntensity(minimalize)
+                    ) {
                         population[i] = new Firefly(
                             computeNewLocation(i, j),
                             objectiveFunction
@@ -73,19 +76,31 @@ public class FireflyAlgorithm {
                     }
                 }
 
-                if (population[i].getIntensity(minimalize) > currentBestSolution.getIntensity(minimalize)) {
+                if (
+                    population[i].getIntensity(minimalize) >
+                    currentBestSolution.getIntensity(minimalize)
+                ) {
                     currentBestSolution = population[i].getCopy();
 
-                    if (population[i].getIntensity(minimalize) > theBestSolution.getIntensity(minimalize)) {
+                    if (
+                        population[i].getIntensity(minimalize) >
+                        theBestSolution.getIntensity(minimalize)
+                    ) {
                         theBestSolution = currentBestSolution.getCopy();
+                        numberOfRunsWithoutImprovements = 5;
+                    }
+
+                    if (numberOfRunsWithoutImprovements-- == 0) {
+                        break;
                     }
                 }
             }
 
             currentBestSolution = new Firefly(computeNewLocation(), objectiveFunction);
             reduceRandomStepCoefficient();
-            addIteration(n + 1);
-            addLocationAt(n + 1);
+            addIteration(currentRun + 1);
+            addLocationAt(currentRun + 1);
+            currentRun++;
         }
 
         return iterations;
@@ -233,7 +248,7 @@ public class FireflyAlgorithm {
         return intensities;
     }
 
-    public boolean hasReachedTheGoal(){
+    public boolean hasReachedTheGoal() {
         Double[] extremes = objectiveFunction.getExtremes();
 
         for (int i = 0; i < populationSize; i++) {
@@ -245,7 +260,11 @@ public class FireflyAlgorithm {
         return false;
     }
 
-    private boolean areFloatsEqual(double d1, double d2){
+    private boolean areFloatsEqual(double d1, double d2) {
         return Math.abs(d1 - d2) < THRESHOLD;
+    }
+
+    public int getCurrentRun() {
+        return currentRun;
     }
 }
