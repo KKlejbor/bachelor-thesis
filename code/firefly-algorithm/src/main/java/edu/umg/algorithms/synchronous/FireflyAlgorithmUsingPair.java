@@ -93,7 +93,7 @@ public class FireflyAlgorithmUsingPair {
                         break;
                     }
 
-                    if(hasReachedTheGoal()){
+                    if (hasReachedTheGoal()) {
                         break;
                     }
                 }
@@ -269,7 +269,7 @@ public class FireflyAlgorithmUsingPair {
         for (int i = 0; i < populationSize; i++) {
             for (int j = 0; j < extremes.length; j++) {
                 result = areFloatsEqual(population[i].getIntensity(), extremes[j]);
-                if(result){
+                if (result) {
                     return result;
                 }
             }
