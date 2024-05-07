@@ -44,21 +44,15 @@ public class App {
                 > objectiveFunctionsND = new ArrayList<>();
 
         objectiveFunctionsND.add(new Quartet<>(new Ackley(), -32.768, 32.768, 6));
-        //        objectiveFunctionsND.add(new Quartet<>(new AlpineN2(8), 0D, 10D, 8));
-        //        objectiveFunctionsND.add(new Quartet<>(new Griewank(), -600D, 600D, 10));
         objectiveFunctionsND.add(new Quartet<>(new Rastrigin(), -5.12, 5.12, 4));
         objectiveFunctionsND.add(new Quartet<>(new Schwefel(), -500D, 500D, 10));
-        //        objectiveFunctionsND.add(new Quartet<>(new Sphere(), -5.12, 5.12, 8));
 
         ArrayList<
                 Triplet<BenchmarkFunction<Pair<Double, Double>, Double>, Double, Double>
                 > objectiveFunctions2D = new ArrayList<>();
 
-        //        objectiveFunctions2D.add(new Triplet<>(new Bohachevsky(), -100D, 100D));
-        //        objectiveFunctions2D.add(new Triplet<>(new DropWave(), -5.12, 5.12));
-        objectiveFunctions2D.add(new Triplet<>(new Easom(), -600D, 600D));
-        objectiveFunctions2D.add(new Triplet<>(new Eggholder(), -5.12, 5.12));
-        //        objectiveFunctions2D.add(new Triplet<>(new Himmelblau(), -500D, 500D));
+        objectiveFunctions2D.add(new Triplet<>(new Easom(), -100D, 100D));
+        objectiveFunctions2D.add(new Triplet<>(new Eggholder(), -512D, 512D));
         objectiveFunctions2D.add(new Triplet<>(new LevyN13(), -10D, 10D));
 
         try (
