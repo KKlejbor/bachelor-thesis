@@ -139,7 +139,7 @@ public class App {
         Instant stop = Instant.now();
         System.out.println("========================================================================");
         System.out.printf("Aplikacja zakończyła działanie: %s \n", dtf.format(now));
-        System.out.printf("Czas działania: %s \n", Miscellaneous.getTime(Duration.between(stop, start).getSeconds()));
+        System.out.printf("Czas działania: %s \n", Miscellaneous.getTime(Duration.between(start, stop).getSeconds()));
         System.out.println("========================================================================");
     }
 }
