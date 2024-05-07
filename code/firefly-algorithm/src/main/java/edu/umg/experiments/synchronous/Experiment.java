@@ -1,7 +1,6 @@
 package edu.umg.experiments.synchronous;
 
 import edu.umg.helpers.Miscellaneous;
-
 import java.util.Arrays;
 import java.util.stream.DoubleStream;
 

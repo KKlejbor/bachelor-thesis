@@ -161,17 +161,16 @@ public class ExperimentMultidimensional implements Experiment {
             PrintWriter writer = new PrintWriter(
                 String.format(
                     "results/%s_a_%s_d_%s_Pop_%d_Iter_%d/%s_a_%s_d_%s_Pop_%d_Iter_%d.csv",
-                        objectiveFunction.getClass().getSimpleName(),
-                        getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
-                        getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
-                        populationSize,
-                        maximumNumberOfGenerations,
-                        objectiveFunction.getClass().getSimpleName(),
-                        getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
-                        getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
-                        populationSize,
-                        maximumNumberOfGenerations
-
+                    objectiveFunction.getClass().getSimpleName(),
+                    getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
+                    getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
+                    populationSize,
+                    maximumNumberOfGenerations,
+                    objectiveFunction.getClass().getSimpleName(),
+                    getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
+                    getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
+                    populationSize,
+                    maximumNumberOfGenerations
                 )
             )
         ) {
@@ -191,16 +190,16 @@ public class ExperimentMultidimensional implements Experiment {
             PrintWriter writer = new PrintWriter(
                 String.format(
                     "results/%s_a_%s_d_%s_Pop_%d_Iter_%d/%s_a_%s_d_%s_Pop_%d_Iter_%d_stats.csv",
-                        objectiveFunction.getClass().getSimpleName(),
-                        getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
-                        getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
-                        populationSize,
-                        maximumNumberOfGenerations,
-                        objectiveFunction.getClass().getSimpleName(),
-                        getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
-                        getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
-                        populationSize,
-                        maximumNumberOfGenerations
+                    objectiveFunction.getClass().getSimpleName(),
+                    getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
+                    getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
+                    populationSize,
+                    maximumNumberOfGenerations,
+                    objectiveFunction.getClass().getSimpleName(),
+                    getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
+                    getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
+                    populationSize,
+                    maximumNumberOfGenerations
                 )
             )
         ) {
