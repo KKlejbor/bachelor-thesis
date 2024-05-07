@@ -161,11 +161,14 @@ public class App {
         );
 
         if (!Arrays.stream(args).anyMatch(s -> s.equals("skip-synch"))) {
-            String[] functions = Arrays.stream(args)
+            String[] tokens = Arrays.stream(args)
                 .filter(s -> s.contains("only="))
                 .findAny()
                 .orElse("")
-                .split("=")[1].split(",");
+                .split("=");
+
+            String[] functions = tokens.length > 1 ? tokens[1].split(",") : new String[0];
+
             runSynchronousVersion(functions);
         }
 
