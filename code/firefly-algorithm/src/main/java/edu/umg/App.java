@@ -13,6 +13,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -138,7 +139,9 @@ public class App {
         System.out.printf("Uruchomiono aplikację: %s \n", dtf.format(now));
         System.out.println("========================================================================");
 
-        runSynchronousVersion();
+        if(!Arrays.stream(args).anyMatch(s -> s.equals("skip-synch"))){
+            runSynchronousVersion();
+        }
 
         now = LocalDateTime.now();
         Instant stop = Instant.now();
