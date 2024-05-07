@@ -217,7 +217,7 @@ public class ExperimentMultidimensional implements Experiment {
             writer.print(getTime(StatUtils.min(times)) + ";");
             writer.print(getTime(StatUtils.mean(times)) + ";");
             writer.printf(
-                "%f1.2\n",
+                "%1.2f\n",
                 Math.round((numberOfReaches / (double) numberOfRuns) * 10000.0) / 100.0
             );
         } catch (Exception e) {

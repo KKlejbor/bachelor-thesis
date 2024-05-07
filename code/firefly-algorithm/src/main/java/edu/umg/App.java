@@ -34,7 +34,7 @@ public class App {
         );
     }
 
-    private static void runSynchronousVersion(){
+    private static void runSynchronousVersion(String[] functions){
         double[] randomStepCoefficients = new double[] { 0.1, 0.2, 0.8 };
         double[] randomStepReductionCoefficients = new double[] { 0.98, 0.99, 0.998 };
         int[] populationSizes = new int[] { 100, 200, 500 };
@@ -51,7 +51,7 @@ public class App {
                 Triplet<BenchmarkFunction<Pair<Double, Double>, Double>, Double, Double>
                 > objectiveFunctions2D = new ArrayList<>();
 
-        objectiveFunctions2D.add(new Triplet<>(new Easom(), -100D, 100D));
+        objectiveFunctions2D.add(new Triplet<>(new DropWave(), -5.12, 5.12));
         objectiveFunctions2D.add(new Triplet<>(new Eggholder(), -512D, 512D));
         objectiveFunctions2D.add(new Triplet<>(new LevyN13(), -10D, 10D));
 
@@ -83,8 +83,9 @@ public class App {
                                     objectiveFunction.getValue2(),
                                     objectiveFunction.getValue0().getCopy()
                             );
-
-                            executorService.submit(experiment);
+                            if(functions.length > 0 && Arrays.stream(functions).anyMatch(s -> s.equals(objectiveFunction.getValue0().getClass().getSimpleName()))){
+                                executorService.submit(experiment);
+                            }
                         }
                     }
                 }
@@ -111,8 +112,9 @@ public class App {
                                     objectiveFunction.getValue2(),
                                     objectiveFunction.getValue0().getCopy()
                             );
-
-                            executorService.submit(experiment);
+                            if(functions.length > 0 && Arrays.stream(functions).anyMatch(s -> s.equals(objectiveFunction.getValue0().getClass().getSimpleName()))){
+                                executorService.submit(experiment);
+                            }
                         }
                     }
                 }
@@ -134,7 +136,8 @@ public class App {
         System.out.println("========================================================================");
 
         if(!Arrays.stream(args).anyMatch(s -> s.equals("skip-synch"))){
-            runSynchronousVersion();
+            String[] functions = Arrays.stream(args).filter(s -> s.contains("only=")).findAny().orElse("").split("=")[1].split(",");
+            runSynchronousVersion(functions);
         }
 
         now = LocalDateTime.now();

@@ -73,7 +73,7 @@ public class ExperimentTwoDimensional implements Experiment {
 
         File resultDir = new File(
             String.format(
-                "results/%s_a_%s_d%s_Pop_%d_Iter_%s/",
+                "results/%s_a_%s_d_%s_Pop_%d_Iter_%d/",
                 objectiveFunction.getClass().getSimpleName(),
                 getFloatWithoutPeriod("%1.1f", randomStepCoefficient),
                 getFloatWithoutPeriod("%1.3f", randomStepReductionCoefficient),
@@ -111,6 +111,7 @@ public class ExperimentTwoDimensional implements Experiment {
                 lightAbsorptionCoefficient,
                 populationSize,
                 i + 1,
+                getTime(times[i]),
                 fireflyAlgorithm.getFinalSolution()
             );
 
@@ -269,7 +270,7 @@ public class ExperimentTwoDimensional implements Experiment {
             writer.print(getTime(StatUtils.min(times)) + ";");
             writer.print(getTime(StatUtils.mean(times)) + ";");
             writer.printf(
-                "%f1.2\n",
+                "%1.2f\n",
                 Math.round((numberOfReaches / (double) numberOfRuns) * 10000.0) / 100.0
             );
         } catch (Exception e) {
