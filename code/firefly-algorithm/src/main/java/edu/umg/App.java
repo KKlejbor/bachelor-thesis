@@ -167,7 +167,7 @@ public class App {
                 .orElse("")
                 .split("=");
 
-            String[] functions = tokens.length > 1 ? tokens[1].split(",") : new String[0];
+            String[] functions = tokens.length > 0 ? tokens[1].split(",") : new String[0];
 
             runSynchronousVersion(functions);
         }
