@@ -57,7 +57,7 @@ public class ExperimentMultidimensional implements Experiment {
     @Override
     public void run() {
         Iteration[][] runs = new Iteration[numberOfRuns][];
-        double[][] values = new double[numberOfRuns][];
+        double[] bestValues = new double[numberOfRuns];
         double[] times = new double[numberOfRuns];
         int numberOfReaches = 0;
         int end = maximumNumberOfGenerations + 1;
@@ -103,7 +103,7 @@ public class ExperimentMultidimensional implements Experiment {
             Instant stop = Instant.now();
 
             times[i] = Duration.between(start, stop).getSeconds();
-            values[i] = fireflyAlgorithm.getIntensities();
+            bestValues[i] = fireflyAlgorithm.getFinalSolution().getIntensity();
 
             System.out.printf(
                 "\nFunkcja %s, alpha = %1.3f, delta = %1.3f, gamma = %1.3f, pop = %d, podejście %d.: %s\nNajlepsze rozwiązanie: \n%s\n\n",
@@ -207,12 +207,12 @@ public class ExperimentMultidimensional implements Experiment {
             writer.println(
                 "max;min;standard;avg;max_time;min_time;avg_time;reached_percent"
             );
-            double[] allValues = flatten(values);
+
             StandardDeviation sd = new StandardDeviation(false);
-            writer.printf("%f1.6;", StatUtils.max(allValues));
-            writer.printf("%f1.6;", StatUtils.min(allValues));
-            writer.printf("%f1.6;", sd.evaluate(allValues));
-            writer.printf("%f1.6;", StatUtils.mean(allValues));
+            writer.printf("%f1.6;", StatUtils.max(bestValues));
+            writer.printf("%f1.6;", StatUtils.min(bestValues));
+            writer.printf("%f1.6;", sd.evaluate(bestValues));
+            writer.printf("%f1.6;", StatUtils.mean(bestValues));
             writer.print(getTime(StatUtils.max(times)) + ";");
             writer.print(getTime(StatUtils.min(times)) + ";");
             writer.print(getTime(StatUtils.mean(times)) + ";");
