@@ -56,6 +56,7 @@ public class ExperimentTwoDimensional implements Experiment {
     public void run() {
         Iteration[][] runs = new Iteration[numberOfRuns][];
         Double[][][][] locations = new Double[numberOfRuns][][][];
+        double[] bestValues = new double[numberOfRuns];
         double[][] values = new double[numberOfRuns][];
         double[] times = new double[numberOfRuns];
         int numberOfReaches = 0;
@@ -116,6 +117,7 @@ public class ExperimentTwoDimensional implements Experiment {
             locations[i] = fireflyAlgorithm.getLocations();
 
             values[i] = fireflyAlgorithm.getIntensities();
+            bestValues[i] = fireflyAlgorithm.getFinalSolution().getIntensity();
 
             if (fireflyAlgorithm.hasReachedTheGoal()) {
                 numberOfReaches++;
@@ -258,12 +260,11 @@ public class ExperimentTwoDimensional implements Experiment {
             writer.println(
                 "max;min;standard;avg;max_time;min_time;avg_time;reached_percent"
             );
-            double[] allValues = flatten(values);
             StandardDeviation sd = new StandardDeviation(false);
-            writer.printf("%f1.6;", StatUtils.max(allValues));
-            writer.printf("%f1.6;", StatUtils.min(allValues));
-            writer.printf("%f1.6;", sd.evaluate(allValues));
-            writer.printf("%f1.6;", StatUtils.mean(allValues));
+            writer.printf("%f1.6;", StatUtils.max(bestValues));
+            writer.printf("%f1.6;", StatUtils.min(bestValues));
+            writer.printf("%f1.6;", sd.evaluate(bestValues));
+            writer.printf("%f1.6;", StatUtils.mean(bestValues));
             writer.print(getTime(StatUtils.max(times)) + ";");
             writer.print(getTime(StatUtils.min(times)) + ";");
             writer.print(getTime(StatUtils.mean(times)) + ";");

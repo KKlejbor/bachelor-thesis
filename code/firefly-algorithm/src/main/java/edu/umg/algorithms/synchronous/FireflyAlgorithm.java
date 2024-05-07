@@ -90,7 +90,11 @@ public class FireflyAlgorithm {
                         numberOfRunsWithoutImprovements = 5;
                     }
 
-                    if (numberOfRunsWithoutImprovements-- == 0) {
+                    if (--numberOfRunsWithoutImprovements == 0) {
+                        break;
+                    }
+
+                    if(hasReachedTheGoal()){
                         break;
                     }
                 }
@@ -250,14 +254,18 @@ public class FireflyAlgorithm {
 
     public boolean hasReachedTheGoal() {
         Double[] extremes = objectiveFunction.getExtremes();
+        boolean result = false;
 
         for (int i = 0; i < populationSize; i++) {
             for (int j = 0; j < extremes.length; j++) {
-                return areFloatsEqual(population[i].getIntensity(), extremes[j]);
+                result = areFloatsEqual(population[i].getIntensity(), extremes[j]);
+                if(result){
+                    return result;
+                }
             }
         }
 
-        return false;
+        return result;
     }
 
     private boolean areFloatsEqual(double d1, double d2) {
