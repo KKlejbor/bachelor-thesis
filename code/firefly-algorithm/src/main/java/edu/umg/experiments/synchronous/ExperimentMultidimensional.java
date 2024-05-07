@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.time.Duration;
 import java.time.Instant;
 import org.apache.commons.math3.stat.StatUtils;
+import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 
 public class ExperimentMultidimensional implements Experiment {
 
@@ -207,8 +208,10 @@ public class ExperimentMultidimensional implements Experiment {
                 "max;min;standard;avg;max_time;min_time;avg_time;reached_percent"
             );
             double[] allValues = flatten(values);
+            StandardDeviation sd = new StandardDeviation(false);
             writer.printf("%f1.6;", StatUtils.max(allValues));
             writer.printf("%f1.6;", StatUtils.min(allValues));
+            writer.printf("%f1.6;", sd.evaluate(allValues));
             writer.printf("%f1.6;", StatUtils.mean(allValues));
             writer.print(getTime(StatUtils.max(times)) + ";");
             writer.print(getTime(StatUtils.min(times)) + ";");

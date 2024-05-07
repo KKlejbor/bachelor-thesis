@@ -1,5 +1,7 @@
 package edu.umg.experiments.synchronous;
 
+import edu.umg.helpers.Miscellaneous;
+
 import java.util.Arrays;
 import java.util.stream.DoubleStream;
 
@@ -11,14 +13,10 @@ public interface Experiment extends Runnable {
     }
 
     default double[] flatten(double[][] values) {
-        return Arrays.stream(values).flatMapToDouble(DoubleStream::of).toArray();
+        return Miscellaneous.flatten(values);
     }
 
     default String getTime(double seconds) {
-        return (
-            String.format("%02d:", (long) seconds / (3600)) +
-            String.format("%02d:", (long) (seconds % 3600) / 60) +
-            String.format("%02d", (long) seconds % 60)
-        );
+        return Miscellaneous.getTime(seconds);
     }
 }
