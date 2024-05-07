@@ -273,6 +273,11 @@ public class ExperimentTwoDimensional implements Experiment {
                 "%1.2f\n",
                 Math.round((numberOfReaches / (double) numberOfRuns) * 10000.0) / 100.0
             );
+            writer.println();
+            for (int i = 0; i < bestValues.length - 1; i++) {
+                writer.printf("%f1.6;", bestValues[i]);
+            }
+            writer.printf("%f1.6;", bestValues[bestValues.length - 1]);
         } catch (Exception e) {
             System.out.println(e);
         }
