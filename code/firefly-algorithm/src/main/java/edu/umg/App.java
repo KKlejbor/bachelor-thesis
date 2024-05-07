@@ -3,9 +3,15 @@ package edu.umg;
 import edu.umg.experiments.synchronous.Experiment;
 import edu.umg.experiments.synchronous.ExperimentMultidimensional;
 import edu.umg.experiments.synchronous.ExperimentTwoDimensional;
+import edu.umg.helpers.Miscellaneous;
 import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
 import edu.umg.helpers.benchmark_functions.multidimensional.*;
 import edu.umg.helpers.benchmark_functions.two_dimensional.*;
+
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -28,6 +34,13 @@ public class App {
     }
 
     public static void main(String[] args) {
+        Instant start = Instant.now();
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.uuuu HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println("========================================================================");
+        System.out.printf("Uruchomiono aplikację: %s \n", dtf.format(now));
+        System.out.println("========================================================================");
         double[] randomStepCoefficients = new double[] { 0.1, 0.2, 0.8 };
         double[] randomStepReductionCoefficients = new double[] { 0.98, 0.99, 0.998 };
         int[] populationSizes = new int[] { 100, 200, 500 };
@@ -121,5 +134,12 @@ public class App {
         } finally {
             System.out.println("Completed");
         }
+
+        now = LocalDateTime.now();
+        Instant stop = Instant.now();
+        System.out.println("========================================================================");
+        System.out.printf("Aplikacja zakończyła działanie: %s \n", dtf.format(now));
+        System.out.printf("Czas działania: %s \n", Miscellaneous.getTime(Duration.between(stop, start).getSeconds()));
+        System.out.println("========================================================================");
     }
 }
