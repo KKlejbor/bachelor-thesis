@@ -23,7 +23,7 @@ import org.javatuples.Triplet;
 
 public class App {
 
-    public static ExecutorService newFixedThreadPool(int nThreads) {
+    private static ExecutorService newFixedThreadPool(int nThreads) {
         return new ThreadPoolExecutor(
             nThreads,
             nThreads,
@@ -33,21 +33,14 @@ public class App {
         );
     }
 
-    public static void main(String[] args) {
-        Instant start = Instant.now();
-
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.uuuu HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        System.out.println("========================================================================");
-        System.out.printf("Uruchomiono aplikację: %s \n", dtf.format(now));
-        System.out.println("========================================================================");
+    private static void runSynchronousVersion(){
         double[] randomStepCoefficients = new double[] { 0.1, 0.2, 0.8 };
         double[] randomStepReductionCoefficients = new double[] { 0.98, 0.99, 0.998 };
         int[] populationSizes = new int[] { 100, 200, 500 };
 
         ArrayList<
-            Quartet<BenchmarkFunction<Double[], Double>, Double, Double, Integer>
-        > objectiveFunctionsND = new ArrayList<>();
+                Quartet<BenchmarkFunction<Double[], Double>, Double, Double, Integer>
+                > objectiveFunctionsND = new ArrayList<>();
 
         objectiveFunctionsND.add(new Quartet<>(new Ackley(), -32.768, 32.768, 6));
         //        objectiveFunctionsND.add(new Quartet<>(new AlpineN2(8), 0D, 10D, 8));
@@ -57,8 +50,8 @@ public class App {
         //        objectiveFunctionsND.add(new Quartet<>(new Sphere(), -5.12, 5.12, 8));
 
         ArrayList<
-            Triplet<BenchmarkFunction<Pair<Double, Double>, Double>, Double, Double>
-        > objectiveFunctions2D = new ArrayList<>();
+                Triplet<BenchmarkFunction<Pair<Double, Double>, Double>, Double, Double>
+                > objectiveFunctions2D = new ArrayList<>();
 
         //        objectiveFunctions2D.add(new Triplet<>(new Bohachevsky(), -100D, 100D));
         //        objectiveFunctions2D.add(new Triplet<>(new DropWave(), -5.12, 5.12));
@@ -68,32 +61,32 @@ public class App {
         objectiveFunctions2D.add(new Triplet<>(new LevyN13(), -10D, 10D));
 
         try (
-            ExecutorService executorService = newFixedThreadPool(
-                Runtime.getRuntime().availableProcessors() - 1
-            )
+                ExecutorService executorService = newFixedThreadPool(
+                        Runtime.getRuntime().availableProcessors() - 1
+                )
         ) {
             for (Quartet<
-                BenchmarkFunction<Double[], Double>,
-                Double,
-                Double,
-                Integer
-            > objectiveFunction : objectiveFunctionsND) {
+                    BenchmarkFunction<Double[], Double>,
+                    Double,
+                    Double,
+                    Integer
+                    > objectiveFunction : objectiveFunctionsND) {
                 for (double randomStepCoefficient : randomStepCoefficients) {
                     for (double randomStepReductionCoefficient : randomStepReductionCoefficients) {
                         for (int populationSize : populationSizes) {
                             Experiment experiment = new ExperimentMultidimensional(
-                                1.0,
-                                0.1,
-                                randomStepCoefficient,
-                                randomStepReductionCoefficient,
-                                populationSize,
-                                2000,
-                                10,
-                                objectiveFunction.getValue3(),
-                                true,
-                                objectiveFunction.getValue1(),
-                                objectiveFunction.getValue2(),
-                                objectiveFunction.getValue0().getCopy()
+                                    1.0,
+                                    0.1,
+                                    randomStepCoefficient,
+                                    randomStepReductionCoefficient,
+                                    populationSize,
+                                    2000,
+                                    10,
+                                    objectiveFunction.getValue3(),
+                                    true,
+                                    objectiveFunction.getValue1(),
+                                    objectiveFunction.getValue2(),
+                                    objectiveFunction.getValue0().getCopy()
                             );
 
                             executorService.submit(experiment);
@@ -103,25 +96,25 @@ public class App {
             }
 
             for (Triplet<
-                BenchmarkFunction<Pair<Double, Double>, Double>,
-                Double,
-                Double
-            > objectiveFunction : objectiveFunctions2D) {
+                    BenchmarkFunction<Pair<Double, Double>, Double>,
+                    Double,
+                    Double
+                    > objectiveFunction : objectiveFunctions2D) {
                 for (double randomStepCoefficient : randomStepCoefficients) {
                     for (double randomStepReductionCoefficient : randomStepReductionCoefficients) {
                         for (int populationSize : populationSizes) {
                             Experiment experiment = new ExperimentTwoDimensional(
-                                1.0,
-                                0.1,
-                                randomStepCoefficient,
-                                randomStepReductionCoefficient,
-                                populationSize,
-                                2000,
-                                10,
-                                true,
-                                objectiveFunction.getValue1(),
-                                objectiveFunction.getValue2(),
-                                objectiveFunction.getValue0().getCopy()
+                                    1.0,
+                                    0.1,
+                                    randomStepCoefficient,
+                                    randomStepReductionCoefficient,
+                                    populationSize,
+                                    2000,
+                                    10,
+                                    true,
+                                    objectiveFunction.getValue1(),
+                                    objectiveFunction.getValue2(),
+                                    objectiveFunction.getValue0().getCopy()
                             );
 
                             executorService.submit(experiment);
@@ -134,6 +127,18 @@ public class App {
         } finally {
             System.out.println("Completed");
         }
+    }
+
+    public static void main(String[] args) {
+        Instant start = Instant.now();
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.uuuu HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println("========================================================================");
+        System.out.printf("Uruchomiono aplikację: %s \n", dtf.format(now));
+        System.out.println("========================================================================");
+
+        runSynchronousVersion();
 
         now = LocalDateTime.now();
         Instant stop = Instant.now();
