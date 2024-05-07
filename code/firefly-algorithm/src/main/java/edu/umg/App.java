@@ -83,16 +83,17 @@ public class App {
                                 objectiveFunction.getValue0().getCopy()
                             );
                             if (
-                                functions.length > 0 &&
-                                Arrays.stream(functions).anyMatch(
-                                    s ->
-                                        s.equals(
-                                            objectiveFunction
-                                                .getValue0()
-                                                .getClass()
-                                                .getSimpleName()
-                                        )
-                                )
+                                (functions.length > 0 &&
+                                    Arrays.stream(functions).anyMatch(
+                                        s ->
+                                            s.equals(
+                                                objectiveFunction
+                                                    .getValue0()
+                                                    .getClass()
+                                                    .getSimpleName()
+                                            )
+                                    )) ||
+                                functions.length == 0
                             ) {
                                 executorService.submit(experiment);
                             }
@@ -123,16 +124,17 @@ public class App {
                                 objectiveFunction.getValue0().getCopy()
                             );
                             if (
-                                functions.length > 0 &&
-                                Arrays.stream(functions).anyMatch(
-                                    s ->
-                                        s.equals(
-                                            objectiveFunction
-                                                .getValue0()
-                                                .getClass()
-                                                .getSimpleName()
-                                        )
-                                )
+                                (functions.length > 0 &&
+                                    Arrays.stream(functions).anyMatch(
+                                        s ->
+                                            s.equals(
+                                                objectiveFunction
+                                                    .getValue0()
+                                                    .getClass()
+                                                    .getSimpleName()
+                                            )
+                                    )) ||
+                                functions.length == 0
                             ) {
                                 executorService.submit(experiment);
                             }
@@ -167,7 +169,7 @@ public class App {
                 .orElse("")
                 .split("=");
 
-            String[] functions = tokens.length > 0 ? tokens[1].split(",") : new String[0];
+            String[] functions = tokens.length > 1 ? tokens[1].split(",") : new String[0];
 
             runSynchronousVersion(functions);
         }
