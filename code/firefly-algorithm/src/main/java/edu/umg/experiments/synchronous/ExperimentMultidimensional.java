@@ -213,13 +213,16 @@ public class ExperimentMultidimensional implements Experiment {
             writer.print(getTime(StatUtils.mean(times)) + ",");
             writer.printf(
                 "%1.2f\n",
-                    Miscellaneous.round((numberOfReaches / (double) numberOfRuns) * 100D, 2)
+                Miscellaneous.round((numberOfReaches / (double) numberOfRuns) * 100D, 2)
             );
             writer.println();
             for (int i = 0; i < bestValues.length - 1; i++) {
                 writer.printf("%1.5f,", Miscellaneous.round(bestValues[i], 5));
             }
-            writer.printf("%1.5f\n", Miscellaneous.round(bestValues[bestValues.length - 1], 5));
+            writer.printf(
+                "%1.5f\n",
+                Miscellaneous.round(bestValues[bestValues.length - 1], 5)
+            );
         } catch (Exception e) {
             System.out.println(e);
         }

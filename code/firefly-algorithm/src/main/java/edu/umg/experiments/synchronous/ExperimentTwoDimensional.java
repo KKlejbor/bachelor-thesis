@@ -230,9 +230,15 @@ public class ExperimentTwoDimensional implements Experiment {
                 for (int k = 0; k < 2; k++) {
                     for (int j = 0; j < locations[0][i].length; j++) {
                         if (j < locations[0][i].length - 1) {
-                            writer.printf("%.16f,", Miscellaneous.round(locations[0][i][j][k], 16));
+                            writer.printf(
+                                "%.16f,",
+                                Miscellaneous.round(locations[0][i][j][k], 16)
+                            );
                         } else {
-                            writer.printf("%.16f\n", Miscellaneous.round(locations[0][i][j][k], 16));
+                            writer.printf(
+                                "%.16f\n",
+                                Miscellaneous.round(locations[0][i][j][k], 16)
+                            );
                         }
                     }
                 }
@@ -278,7 +284,10 @@ public class ExperimentTwoDimensional implements Experiment {
             for (int i = 0; i < bestValues.length - 1; i++) {
                 writer.printf("%1.5f,", Miscellaneous.round(bestValues[i], 5));
             }
-            writer.printf("%1.5f\n", Miscellaneous.round(bestValues[bestValues.length - 1], 5));
+            writer.printf(
+                "%1.5f\n",
+                Miscellaneous.round(bestValues[bestValues.length - 1], 5)
+            );
         } catch (Exception e) {
             System.out.println(e);
         }
