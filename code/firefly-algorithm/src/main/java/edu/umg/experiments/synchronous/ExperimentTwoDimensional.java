@@ -226,9 +226,14 @@ public class ExperimentTwoDimensional implements Experiment {
                 )
             )
         ) {
+            boolean stop = false;
             for (int i = 0; i < locations[0].length; i++) {
                 for (int k = 0; k < 2; k++) {
                     for (int j = 0; j < locations[0][i].length; j++) {
+                        stop = locations[0][i][j][k] == null;
+                        if(stop){
+                            break;
+                        }
                         if (j < locations[0][i].length - 1) {
                             writer.printf(
                                 "%.16f,",
@@ -241,6 +246,9 @@ public class ExperimentTwoDimensional implements Experiment {
                             );
                         }
                     }
+                }
+                if(stop){
+                    break;
                 }
                 writer.println();
             }
