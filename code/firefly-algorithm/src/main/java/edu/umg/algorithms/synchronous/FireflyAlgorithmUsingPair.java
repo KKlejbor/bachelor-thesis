@@ -89,14 +89,6 @@ public class FireflyAlgorithmUsingPair {
                         finalSolution = theBestSolution.getCopy();
                         numberOfRunsWithoutImprovements = 5;
                     }
-
-                    if (--numberOfRunsWithoutImprovements == 0) {
-                        break;
-                    }
-
-                    if (hasReachedTheGoal()) {
-                        break;
-                    }
                 }
             }
 
@@ -108,6 +100,14 @@ public class FireflyAlgorithmUsingPair {
             addIteration(currentRun + 1);
             addLocationAt(currentRun + 1);
             currentRun++;
+
+            if (--numberOfRunsWithoutImprovements == 0) {
+                break;
+            }
+
+            if (hasReachedTheGoal()) {
+                break;
+            }
         }
 
         return Arrays.copyOf(iterations, currentRun + 1);

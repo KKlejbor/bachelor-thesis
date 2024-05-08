@@ -90,14 +90,6 @@ public class FireflyAlgorithm {
                         theBestSolution = currentBestSolution.getCopy();
                         numberOfRunsWithoutImprovements = 5;
                     }
-
-                    if (--numberOfRunsWithoutImprovements == 0) {
-                        break;
-                    }
-
-                    if (hasReachedTheGoal()) {
-                        break;
-                    }
                 }
             }
 
@@ -106,6 +98,14 @@ public class FireflyAlgorithm {
             addIteration(currentRun + 1);
             addLocationAt(currentRun + 1);
             currentRun++;
+
+            if (--numberOfRunsWithoutImprovements == 0) {
+                break;
+            }
+
+            if (hasReachedTheGoal()) {
+                break;
+            }
         }
 
         return Arrays.copyOf(iterations, currentRun + 1);
