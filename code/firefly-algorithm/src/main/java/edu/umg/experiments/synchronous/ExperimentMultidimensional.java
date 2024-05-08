@@ -208,10 +208,10 @@ public class ExperimentMultidimensional implements Experiment {
             );
 
             StandardDeviation sd = new StandardDeviation(false);
-            writer.printf("%f1.6;", StatUtils.max(bestValues));
-            writer.printf("%f1.6;", StatUtils.min(bestValues));
-            writer.printf("%f1.6;", sd.evaluate(bestValues));
-            writer.printf("%f1.6;", StatUtils.mean(bestValues));
+            writer.printf("%1.5f;", StatUtils.max(bestValues));
+            writer.printf("%1.5f;", StatUtils.min(bestValues));
+            writer.printf("%1.5f;", sd.evaluate(bestValues));
+            writer.printf("%1.5f;", StatUtils.mean(bestValues));
             writer.print(getTime(StatUtils.max(times)) + ";");
             writer.print(getTime(StatUtils.min(times)) + ";");
             writer.print(getTime(StatUtils.mean(times)) + ";");
@@ -221,9 +221,9 @@ public class ExperimentMultidimensional implements Experiment {
             );
             writer.println();
             for (int i = 0; i < bestValues.length - 1; i++) {
-                writer.printf("%f1.6;", bestValues[i]);
+                writer.printf("%1.5f;", bestValues[i]);
             }
-            writer.printf("%f1.6;", bestValues[bestValues.length - 1]);
+            writer.printf("%1.5f;", bestValues[bestValues.length - 1]);
         } catch (Exception e) {
             System.out.println(e);
         }
