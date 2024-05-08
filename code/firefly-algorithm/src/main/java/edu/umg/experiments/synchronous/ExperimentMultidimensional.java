@@ -2,6 +2,7 @@ package edu.umg.experiments.synchronous;
 
 import edu.umg.algorithms.synchronous.FireflyAlgorithm;
 import edu.umg.helpers.Iteration;
+import edu.umg.helpers.Miscellaneous;
 import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
 import java.io.File;
 import java.io.PrintWriter;
@@ -128,19 +129,14 @@ public class ExperimentMultidimensional implements Experiment {
             }
         }
 
-        Iteration[] results = new Iteration[end];
+        Iteration[] results = new Iteration[end + 1];
 
-        for (int i = 0; i < end; i++) {
+        for (int i = 0; i < results.length; i++) {
             results[i] = new Iteration(0.0, 0.0);
         }
 
         for (int i = 0; i < runs.length; i++) {
-            for (int j = 0; j < end; j++) {
-                if (results[j] == null) {
-                    end = j;
-                    break;
-                }
-
+            for (int j = 0; j < results.length; j++) {
                 Iteration iteration = results[j];
 
                 results[j] = new Iteration(
@@ -150,7 +146,7 @@ public class ExperimentMultidimensional implements Experiment {
             }
         }
 
-        for (int i = 0; i < end; i++) {
+        for (int i = 0; i < results.length; i++) {
             results[i] = new Iteration(
                 results[i].average() / (double) (numberOfRuns * populationSize),
                 results[i].best() / (double) (numberOfRuns)
@@ -176,10 +172,10 @@ public class ExperimentMultidimensional implements Experiment {
         ) {
             for (int i = 0; i < end; i++) {
                 writer.printf(
-                    "%d,%1.6f,%1.6f\n",
-                    i + 1,
-                    results[i].average(),
-                    results[i].best()
+                    "%d,%1.5f,%1.5f\n",
+                    i,
+                    Miscellaneous.round(results[i].average(), 5),
+                    Miscellaneous.round(results[i].best(), 5)
                 );
             }
         } catch (Exception e) {
@@ -204,26 +200,29 @@ public class ExperimentMultidimensional implements Experiment {
             )
         ) {
             writer.println(
-                "max;min;standard;avg;max_time;min_time;avg_time;reached_percent"
+                "max,min,standard,avg,max_time,min_time,avg_time,reached_percent"
             );
 
             StandardDeviation sd = new StandardDeviation(false);
-            writer.printf("%f1.6;", StatUtils.max(bestValues));
-            writer.printf("%f1.6;", StatUtils.min(bestValues));
-            writer.printf("%f1.6;", sd.evaluate(bestValues));
-            writer.printf("%f1.6;", StatUtils.mean(bestValues));
-            writer.print(getTime(StatUtils.max(times)) + ";");
-            writer.print(getTime(StatUtils.min(times)) + ";");
-            writer.print(getTime(StatUtils.mean(times)) + ";");
+            writer.printf("%1.5f,", Miscellaneous.round(StatUtils.max(bestValues), 5));
+            writer.printf("%1.5f,", Miscellaneous.round(StatUtils.min(bestValues), 5));
+            writer.printf("%1.5f,", Miscellaneous.round(sd.evaluate(bestValues), 5));
+            writer.printf("%1.5f,", Miscellaneous.round(StatUtils.mean(bestValues), 5));
+            writer.print(getTime(StatUtils.max(times)) + ",");
+            writer.print(getTime(StatUtils.min(times)) + ",");
+            writer.print(getTime(StatUtils.mean(times)) + ",");
             writer.printf(
                 "%1.2f\n",
-                Math.round((numberOfReaches / (double) numberOfRuns) * 10000.0) / 100.0
+                Miscellaneous.round((numberOfReaches / (double) numberOfRuns) * 100D, 2)
             );
             writer.println();
             for (int i = 0; i < bestValues.length - 1; i++) {
-                writer.printf("%f1.6;", bestValues[i]);
+                writer.printf("%1.5f,", Miscellaneous.round(bestValues[i], 5));
             }
-            writer.printf("%f1.6;", bestValues[bestValues.length - 1]);
+            writer.printf(
+                "%1.5f\n",
+                Miscellaneous.round(bestValues[bestValues.length - 1], 5)
+            );
         } catch (Exception e) {
             System.out.println(e);
         }

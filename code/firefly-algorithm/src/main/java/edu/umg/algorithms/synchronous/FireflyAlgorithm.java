@@ -3,6 +3,7 @@ package edu.umg.algorithms.synchronous;
 import edu.umg.algorithms.synchronous.objects.Firefly;
 import edu.umg.helpers.Iteration;
 import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class FireflyAlgorithm {
@@ -60,7 +61,7 @@ public class FireflyAlgorithm {
         findTheBestSolution();
         addIteration(0);
         addLocationAt(0);
-        int numberOfRunsWithoutImprovements = 5;
+        int numberOfRunsWithoutImprovements = 50;
 
         while (currentRun < maximumNumberOfGenerations) {
             for (int i = 0; i < populationSize; i++) {
@@ -87,15 +88,7 @@ public class FireflyAlgorithm {
                         theBestSolution.getIntensity(minimalize)
                     ) {
                         theBestSolution = currentBestSolution.getCopy();
-                        numberOfRunsWithoutImprovements = 5;
-                    }
-
-                    if (--numberOfRunsWithoutImprovements == 0) {
-                        break;
-                    }
-
-                    if (hasReachedTheGoal()) {
-                        break;
+                        numberOfRunsWithoutImprovements = 50;
                     }
                 }
             }
@@ -105,9 +98,17 @@ public class FireflyAlgorithm {
             addIteration(currentRun + 1);
             addLocationAt(currentRun + 1);
             currentRun++;
+
+            if (--numberOfRunsWithoutImprovements == 0) {
+                break;
+            }
+
+            if (hasReachedTheGoal()) {
+                break;
+            }
         }
 
-        return iterations;
+        return Arrays.copyOf(iterations, currentRun + 1);
     }
 
     private void initializePopulation() {

@@ -16,4 +16,8 @@ public class Miscellaneous {
             String.format("%02d", (long) seconds % 60)
         );
     }
+
+    public static double round(double value, int precision) {
+        return Math.round(value * Math.pow(10, precision)) / Math.pow(10, precision);
+    }
 }

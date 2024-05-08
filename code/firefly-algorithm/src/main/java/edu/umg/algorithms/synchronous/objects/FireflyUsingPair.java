@@ -1,5 +1,6 @@
 package edu.umg.algorithms.synchronous.objects;
 
+import edu.umg.helpers.Miscellaneous;
 import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
 import org.javatuples.Pair;
 
@@ -27,10 +28,10 @@ public record FireflyUsingPair(
     public String toString() {
         return (
             "f(" +
-            String.format("%.16f, ", location.getValue0()) +
-            String.format("%.16f", location.getValue1()) +
+            String.format("%.16f, ", Miscellaneous.round(location.getValue0(), 16)) +
+            String.format("%.16f", Miscellaneous.round(location.getValue1(), 16)) +
             ") = " +
-            String.format("%.16f", getIntensity())
+            String.format("%.16f", Miscellaneous.round(getIntensity(), 16))
         );
     }
 }
