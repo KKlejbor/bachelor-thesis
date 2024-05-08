@@ -1,5 +1,6 @@
 package edu.umg.algorithms.synchronous.objects;
 
+import edu.umg.helpers.Miscellaneous;
 import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
 import java.text.DecimalFormat;
 import java.util.Arrays;
@@ -30,15 +31,15 @@ public record Firefly(
         StringBuilder stringBuilder = new StringBuilder("f(");
 
         for (int i = 0; i < location.length - 1; i++) {
-            stringBuilder.append(String.format("%.16f, ", location[i]));
+            stringBuilder.append(String.format("%.16f, ", Miscellaneous.round(location[i], 16)));
         }
 
         DecimalFormat decimalFormat = new DecimalFormat("0.################");
 
         return stringBuilder
-            .append(String.format("%.16f", location[location.length - 1]))
+            .append(String.format("%.16f", Miscellaneous.round(location[location.length - 1], 16)))
             .append(") = ")
-            .append(decimalFormat.format(getIntensity()))
+            .append(decimalFormat.format(Miscellaneous.round(getIntensity(), 16)))
             .toString();
     }
 }

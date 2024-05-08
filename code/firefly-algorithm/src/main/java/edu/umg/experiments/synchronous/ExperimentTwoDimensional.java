@@ -2,6 +2,7 @@ package edu.umg.experiments.synchronous;
 
 import edu.umg.algorithms.synchronous.FireflyAlgorithmUsingPair;
 import edu.umg.helpers.Iteration;
+import edu.umg.helpers.Miscellaneous;
 import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
 import java.io.File;
 import java.io.PrintWriter;
@@ -149,7 +150,7 @@ public class ExperimentTwoDimensional implements Experiment {
                 )
             ) {
                 for (int j = 0; j < values.length; j++) {
-                    writer.printf("%1.5f\n", values[i][j]);
+                    writer.printf("%1.5f\n", Miscellaneous.round(values[i][j], 5));
                 }
             } catch (Exception e) {
                 System.out.println(e);
@@ -198,10 +199,10 @@ public class ExperimentTwoDimensional implements Experiment {
         ) {
             for (int i = 0; i < results.length; i++) {
                 writer.printf(
-                    "%d,%1.6f,%1.6f\n",
+                    "%d,%1.5f,%1.5f\n",
                     i + 1,
-                    results[i].average(),
-                    results[i].best()
+                    Miscellaneous.round(results[i].average(), 5),
+                    Miscellaneous.round(results[i].best(), 5)
                 );
             }
         } catch (Exception e) {
@@ -229,9 +230,9 @@ public class ExperimentTwoDimensional implements Experiment {
                 for (int k = 0; k < 2; k++) {
                     for (int j = 0; j < locations[0][i].length; j++) {
                         if (j < locations[0][i].length - 1) {
-                            writer.printf("%.16f,", locations[0][i][j][k]);
+                            writer.printf("%.16f,", Miscellaneous.round(locations[0][i][j][k], 16));
                         } else {
-                            writer.printf("%.16f,\n", locations[0][i][j][k]);
+                            writer.printf("%.16f,\n", Miscellaneous.round(locations[0][i][j][k], 16));
                         }
                     }
                 }
@@ -262,22 +263,22 @@ public class ExperimentTwoDimensional implements Experiment {
                 "max;min;standard;avg;max_time;min_time;avg_time;reached_percent"
             );
             StandardDeviation sd = new StandardDeviation(false);
-            writer.printf("%1.5f;", StatUtils.max(bestValues));
-            writer.printf("%1.5f;", StatUtils.min(bestValues));
-            writer.printf("%1.5f;", sd.evaluate(bestValues));
-            writer.printf("%1.5f;", StatUtils.mean(bestValues));
+            writer.printf("%1.5f;", Miscellaneous.round(StatUtils.max(bestValues), 5));
+            writer.printf("%1.5f;", Miscellaneous.round(StatUtils.min(bestValues), 5));
+            writer.printf("%1.5f;", Miscellaneous.round(sd.evaluate(bestValues), 5));
+            writer.printf("%1.5f;", Miscellaneous.round(StatUtils.mean(bestValues), 5));
             writer.print(getTime(StatUtils.max(times)) + ";");
             writer.print(getTime(StatUtils.min(times)) + ";");
             writer.print(getTime(StatUtils.mean(times)) + ";");
             writer.printf(
                 "%1.2f\n",
-                Math.round((numberOfReaches / (double) numberOfRuns) * 10000.0) / 100.0
+                Miscellaneous.round((numberOfReaches / (double) numberOfRuns) * 100D, 2)
             );
             writer.println();
             for (int i = 0; i < bestValues.length - 1; i++) {
-                writer.printf("%1.5f;", bestValues[i]);
+                writer.printf("%1.5f;", Miscellaneous.round(bestValues[i], 5));
             }
-            writer.printf("%1.5f;", bestValues[bestValues.length - 1]);
+            writer.printf("%1.5f;", Miscellaneous.round(bestValues[bestValues.length - 1], 5));
         } catch (Exception e) {
             System.out.println(e);
         }
