@@ -3,6 +3,8 @@ package edu.umg.algorithms.synchronous;
 import edu.umg.algorithms.synchronous.objects.FireflyUsingPair;
 import edu.umg.helpers.Iteration;
 import edu.umg.helpers.benchmark_functions.BenchmarkFunction;
+
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 import org.javatuples.Pair;
 
@@ -109,7 +111,7 @@ public class FireflyAlgorithmUsingPair {
             currentRun++;
         }
 
-        return iterations;
+        return Arrays.copyOf(iterations, currentRun + 1);
     }
 
     private void initializePopulation() {

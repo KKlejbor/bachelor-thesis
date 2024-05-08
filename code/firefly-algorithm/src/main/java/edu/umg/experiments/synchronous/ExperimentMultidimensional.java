@@ -129,19 +129,14 @@ public class ExperimentMultidimensional implements Experiment {
             }
         }
 
-        Iteration[] results = new Iteration[end];
+        Iteration[] results = new Iteration[end + 1];
 
-        for (int i = 0; i < end; i++) {
+        for (int i = 0; i < results.length; i++) {
             results[i] = new Iteration(0.0, 0.0);
         }
 
         for (int i = 0; i < runs.length; i++) {
-            for (int j = 0; j < end; j++) {
-                if (results[j] == null) {
-                    end = j;
-                    break;
-                }
-
+            for (int j = 0; j < results.length; j++) {
                 Iteration iteration = results[j];
 
                 results[j] = new Iteration(
@@ -151,7 +146,7 @@ public class ExperimentMultidimensional implements Experiment {
             }
         }
 
-        for (int i = 0; i < end; i++) {
+        for (int i = 0; i < results.length; i++) {
             results[i] = new Iteration(
                 results[i].average() / (double) (numberOfRuns * populationSize),
                 results[i].best() / (double) (numberOfRuns)
@@ -178,7 +173,7 @@ public class ExperimentMultidimensional implements Experiment {
             for (int i = 0; i < end; i++) {
                 writer.printf(
                     "%d,%1.5f,%1.5f\n",
-                    i + 1,
+                    i,
                     Miscellaneous.round(results[i].average(), 5),
                     Miscellaneous.round(results[i].best(), 5)
                 );

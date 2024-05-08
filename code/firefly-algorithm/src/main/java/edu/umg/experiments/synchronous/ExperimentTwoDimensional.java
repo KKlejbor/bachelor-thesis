@@ -157,14 +157,14 @@ public class ExperimentTwoDimensional implements Experiment {
             }
         }
 
-        Iteration[] results = new Iteration[maximumNumberOfGenerations + 1];
+        Iteration[] results = new Iteration[end + 1];
 
         for (int i = 0; i < results.length; i++) {
             results[i] = new Iteration(0.0, 0.0);
         }
 
         for (int i = 0; i < runs.length; i++) {
-            for (int j = 0; j < runs[i].length; j++) {
+            for (int j = 0; j < results.length; j++) {
                 Iteration iteration = results[j];
                 results[j] = new Iteration(
                     iteration.average() + runs[i][j].average(),
@@ -200,7 +200,7 @@ public class ExperimentTwoDimensional implements Experiment {
             for (int i = 0; i < results.length; i++) {
                 writer.printf(
                     "%d,%1.5f,%1.5f\n",
-                    i + 1,
+                    i,
                     Miscellaneous.round(results[i].average(), 5),
                     Miscellaneous.round(results[i].best(), 5)
                 );
