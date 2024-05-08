@@ -61,7 +61,7 @@ public class FireflyAlgorithm {
         findTheBestSolution();
         addIteration(0);
         addLocationAt(0);
-        int numberOfRunsWithoutImprovements = 5;
+        int numberOfRunsWithoutImprovements = 50;
 
         while (currentRun < maximumNumberOfGenerations) {
             for (int i = 0; i < populationSize; i++) {
@@ -88,7 +88,7 @@ public class FireflyAlgorithm {
                         theBestSolution.getIntensity(minimalize)
                     ) {
                         theBestSolution = currentBestSolution.getCopy();
-                        numberOfRunsWithoutImprovements = 5;
+                        numberOfRunsWithoutImprovements = 50;
                     }
                 }
             }
