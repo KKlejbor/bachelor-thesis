@@ -7,7 +7,7 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\message{*** [umg-ef-thesis.cls] --- (KMK) v1.0 <12.04.2024> ***}
+\message{*** [umg-ef-thesis.cls] --- (KMK) v1.0 <14.05.2024> ***}
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{umg-ef-thesis}
