@@ -74,7 +74,6 @@
 
     \begin{figure}[htbp]
         \centerline{\includegraphics[width=3.64cm,height=3.75cm]{umg-zolty.png}}
-        %\centerline{\includegraphics[scale=0.125]{logo-gmu-6.png}}
     \end{figure}
     \centerline{\fontsize{16pt}{\baselineskip} \selectfont\textbf{ PRACA DYPLOMOWA INŻYNIERSKA}}
     \vspace{1cm}
