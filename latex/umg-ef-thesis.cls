@@ -37,17 +37,28 @@
 \linespread{1.5}
 \setlength\parindent{1cm}
 
+\newcommand{\@supervisor}{imię nazwisko wraz z tytułami}
+\newcommand{\@reviewer}{imię nazwisko wraz z tytułami}
+\newcommand{\@studentsBook}{numer}
+\newcommand{\@acknowledgementDate}{data oświadczenia}
+\newcommand{\@examDate}{dd.mm.rr}
+\newcommand{\@specialty}{specjalność}
+\newcommand{\@superviorsGrade}{ocena}
+\newcommand{\@reviewersGrade}{ocena}
+\newcommand{\@result}{wynik}
+
+
 \renewcommand{\author}[1][imię/imiona nazwisko] {#1}
 \renewcommand{\title}[1][tytuł pracy] {#1}
-\def\supervisor[#1][imię nazwisko wraz z tytułami]   {\gdef\@supervisor[#1]}
-\def\reviewer[#1][imię nazwisko wraz z tytułami]   {\gdef\@reviewer[#1]}
-\def\studentsBook[#1][numer]   {\gdef\@studentsBook[#1]}
-\def\acknowledgementDate[#1][data oświadczenia]   {\gdef\@acknowledgementDate[#1]}
-\def\examDate[#1][dd.mm.rr]   {\gdef\@examDate[#1]}
-\def\specialty[#1][specjalność]   {\gdef\@specialty[#1]}
-\def\superviorsGrade[#1][ocena]   {\gdef\@superviorsGrade[#1]}
-\def\reviewersGrade[#1][ocena]   {\gdef\@reviewersGrade[#1]}
-\def\result[#1][wynik]   {\gdef\@result[#1]}
+\newcommand\supervisor[1] {\renewcommand{\@supervisor}{#1}}
+\newcommand\reviewer[1] {\renewcommand{\@reviewer}{#1}}
+\newcommand\studentsBook[1] {\renewcommand{\@studentsBook}{#1}}
+\newcommand\acknowledgementDate[1] {\renewcommand{\@acknowledgementDate}{#1}}
+\newcommand\examDate[1] {\renewcommand{\@examDate}{#1}}
+\newcommand\specialty[1] {\renewcommand{\@specialty}{#1}}
+\newcommand\superviorsGrade[1] {\renewcommand{\@superviorsGrade}{#1}}
+\newcommand\reviewersGrade[1] {\renewcommand{\@reviewersGrade}{#1}}
+\newcommand\result[1] {\renewcommand{\@result}{#1}}
 
 
 \newcolumntype{C}{>{\centering\arraybackslash}X}
@@ -79,22 +90,22 @@
     \vspace{1cm}
 
     \noindent 
-    Temat: [ Tytuł pracy ] 
+    Temat: \title
     \vspace{1.5cm}
 
     \begin{center}
         \footnotesize
         \begin{tabularx}{\textwidth}{|l|C|l|}
             \hline
-            Dyplomant: & [ Imię/imiona Nazwisko ] & Numer albumu: [ numer ] \\
+            Dyplomant: & \author & Numer albumu: \@studentsBook \\
             \hline
-            Specjalność: & \multicolumn{2}{|c|}{[ specjalność ]}\\
+            Specjalność: & \multicolumn{2}{|c|}{\@specialty}\\
             \hline
-            Promotor: & [ Imię Nazwisko wraz z tytułami ] & Ocena: [ ocena ]\\
+            Promotor: & \@supervisor & Ocena: \@superviorsGrade\\
             \hline
-            Recenzent & [ Imię Nazwisko wraz z tytułami ] & Ocena: [ ocena ]\\
+            Recenzent & \@reviewer & Ocena: \@reviewersGrade\\
             \hline
-            Data egzaminu: & [ dd.mm.rrrr ] & Wynik studiów: [ wynik ] \\
+            Data egzaminu: & \@examDate & Wynik studiów: \@result \\
             \hline
         \end{tabularx}
     \end{center}
@@ -149,7 +160,7 @@
     \end{minipage}
     \begin{minipage}{0.5\linewidth}
         \begin{flushright}
-                Gdynia, dnia [data oświadczenia] r.\\
+                Gdynia, dnia \@acknowledgementDate~r.\\
                 \hfill
         \end{flushright}
     \end{minipage}
@@ -157,7 +168,7 @@
     \vspace{3cm}
     \centerline{\large \textbf{OŚWIADCZENIE}}\vspace{1cm}
 
-    Świadomy/a odpowiedzialności prawnej oświadczam, że złożona praca inżynierska/magisterska* pt.:\textit{[ tytuł pracy ]} została napisana przeze mnie samodzielnie. 
+    Świadomy/a odpowiedzialności prawnej oświadczam, że złożona praca inżynierska/magisterska* pt.: \textit{\title} została napisana przeze mnie samodzielnie. 
 
     Równocześnie oświadczam, że w pracy wykorzystano tylko cytowaną literaturę a więc praca nie narusza praw autorskich w rozumieniu ustawy z dnia 4 lutego 1994 roku o prawie autorskim i~prawach pokrewnych (Dz. U. 1994, nr 24, poz. 83) oraz dóbr osobistych chronionych prawem cywilnym. 
 
