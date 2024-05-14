@@ -28,7 +28,7 @@
 \RequirePackage{xcolor}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{tabularx}
-\RequirePackage{ulem}
+\RequirePackage{soul}
 
 \geometry{lmargin=35mm, rmargin=25mm, tmargin=25mm, bmargin=25mm, foot=10mm, head=10mm}
 
@@ -123,7 +123,7 @@
         \begin{minipage}{.5\linewidth}
             \begin{center}
                 \scriptsize
-                Wyrażam zgodę / nie wyrażam zgody na\\
+                Wyrażam zgodę / \st{nie wyrażam zgody} na\\
                 udostępnianie mojej pracy dyplomowej
                 
                 \vspace{1cm}
@@ -170,7 +170,7 @@
     \vspace{3cm}
     \centerline{\large \textbf{OŚWIADCZENIE}}\vspace{1cm}
 
-    Świadomy/a odpowiedzialności prawnej oświadczam, że złożona praca inżynierska/magisterska* pt.: \textit{\title} została napisana przeze mnie samodzielnie. 
+    Świadomy/a odpowiedzialności prawnej oświadczam, że złożona praca inżynierska/\st{magisterska}* pt.: \textit{\title} została napisana przeze mnie samodzielnie. 
 
     Równocześnie oświadczam, że w pracy wykorzystano tylko cytowaną literaturę a więc praca nie narusza praw autorskich w rozumieniu ustawy z dnia 4 lutego 1994 roku o prawie autorskim i~prawach pokrewnych (Dz. U. 1994, nr 24, poz. 83) oraz dóbr osobistych chronionych prawem cywilnym. 
 
