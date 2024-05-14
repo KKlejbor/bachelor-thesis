@@ -46,6 +46,7 @@
 \newcommand{\@superviorsGrade}{ocena}
 \newcommand{\@reviewersGrade}{ocena}
 \newcommand{\@result}{wynik}
+\newcommand{\@professorship}{nazwa katedry}
 
 
 \renewcommand{\author}[1][imię/imiona nazwisko] {#1}
@@ -59,6 +60,7 @@
 \newcommand\superviorsGrade[1] {\renewcommand{\@superviorsGrade}{#1}}
 \newcommand\reviewersGrade[1] {\renewcommand{\@reviewersGrade}{#1}}
 \newcommand\result[1] {\renewcommand{\@result}{#1}}
+\newcommand\professorship[1] {\renewcommand{\@professorship}{#1}}
 
 
 \newcolumntype{C}{>{\centering\arraybackslash}X}
@@ -71,7 +73,7 @@
             \footnotesize
             \textbf{UNIWERSYTET MORSKI W GDYNI} \\ 
             \textbf{WYDZIAŁ ELEKTRYCZNY} \\
-            Katedra [ Nazwa Katedry ]
+            Katedra \@professorship
         \end{flushleft}
     \end{minipage}
     \begin{minipage}{.4\linewidth}
