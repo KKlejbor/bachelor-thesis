@@ -113,7 +113,7 @@
             \hline
             Dyplomant: & \@myAuthor & Numer albumu: \@studentsBook \\
             \hline
-            Specjalność: & \multicolumn{2}{|c|}{\@specialty}\\
+            Specjalność: & \multicolumn{2}{c|}{\@specialty}\\
             \hline
             Promotor: & \@supervisor & Ocena: \@superviorsGrade\\
             \hline
