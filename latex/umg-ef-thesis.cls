@@ -12,9 +12,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{umg-ef-thesis}
 \LoadClass[a4paper,twoside,openright,12pt]{report}
-% \def\@baseclass{report}
-% \DeclareOption*{\PassOptionsToClass{\CurrentOption}{\@baseclass}}
-% \PassOptionsToClass{}{\@baseclass}
 
 \newcommand{\@myAuthor}{imie/imiona nazwisko}
 \newcommand{\@myTitle}{tytuł pracy}
@@ -42,7 +39,6 @@
 \DeclareOption{result}{\renewcommand{\@result}{#1}}
 \DeclareOption{professorship}{\renewcommand{\@professorship}{#1}}
 
-% Default options
 \ExecuteOptions{title={},author={},supervisor={},reviewer={},studentsBook={},acknowledgementDate={},examDate={},specialty={},superviorsGrade={},result={},professorship={}}
 
 \ProcessOptions\relax
