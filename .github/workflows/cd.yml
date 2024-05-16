@@ -66,7 +66,7 @@ jobs:
             - name: Copy the custom document class
               run: cp ${{env.latex_source_dir}}/${{env.path_to_document_class}} .
             - name: Copy images
-              run: cp -R ${{env.latex_source_dir}}.${{env.images_director}} .
+              run: cp -R ${{env.latex_source_dir}}/${{env.images_director}} .
             - name: Build diff document
               uses: xu-cheng/latex-action@3.2.0
               with:
