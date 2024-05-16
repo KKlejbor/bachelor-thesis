@@ -10,6 +10,7 @@ env:
     path_to_pdf: 'main.pdf'
     path_to_artifact_pdf: 'pdf/main.pdf'
     path_to_old_document: 'old-latex/main.tex'
+    path_to_document_class: 'umg-ef-thesis.cls'
     path_to_diff_document: 'changes.tex'
     path_to_diff_pdf: 'changes.pdf'
 jobs:
@@ -61,6 +62,8 @@ jobs:
               uses: actions/download-artifact@v4.1.4
             - name: Create diff document
               run: latexdiff ${{env.path_to_old_document}} ${{env.latex_source_dir}}/${{env.path_to_document}} > ${{env.path_to_diff_document}}
+            - name: Copy the custom document class
+              run: cp ${{env.latex_source_dir}}/${{env.path_to_document_class}} .
             - name: Build diff document
               uses: xu-cheng/latex-action@3.2.0
               with:
