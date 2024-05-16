@@ -6,6 +6,7 @@ on:
       - 'main'
 env:
     latex_source_dir: 'latex'
+    images_director: 'images'
     path_to_document: 'main.tex'
     path_to_pdf: 'main.pdf'
     path_to_artifact_pdf: 'pdf/main.pdf'
@@ -64,6 +65,8 @@ jobs:
               run: latexdiff ${{env.path_to_old_document}} ${{env.latex_source_dir}}/${{env.path_to_document}} > ${{env.path_to_diff_document}}
             - name: Copy the custom document class
               run: cp ${{env.latex_source_dir}}/${{env.path_to_document_class}} .
+            - name: Copy images
+              run: cp -R ${{env.latex_source_dir}}.${{env.images_director}} .
             - name: Build diff document
               uses: xu-cheng/latex-action@3.2.0
               with:
