@@ -1,6 +1,10 @@
 {
     "recommendations": [
         "james-yu.latex-workshop",
-        "valentjn.vscode-ltex"
+        "valentjn.vscode-ltex",
+        "github.vscode-github-actions",
+        "hyperdarker.intellij-neo-dark",
+        "chadalen.vscode-jetbrains-icon-theme",
+        "k--kato.intellij-idea-keybindings"
     ]
 }
