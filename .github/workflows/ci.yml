@@ -5,8 +5,8 @@ on:
       - 'main'
 env:
     latex_source_dir: 'latex'
-    path_to_document: 'main.tex'
-    java_version: '21.0.2'
+    path_to_document: 'Krzysztof_Michał_Klejbor_46144.tex'
+    java_version: '22.0.1'
     java_distribution: 'temurin'
 jobs:
     build_latex:

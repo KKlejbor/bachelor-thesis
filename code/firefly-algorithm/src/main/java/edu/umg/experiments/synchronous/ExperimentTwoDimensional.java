@@ -231,7 +231,7 @@ public class ExperimentTwoDimensional implements Experiment {
                 for (int k = 0; k < 2; k++) {
                     for (int j = 0; j < locations[0][i].length; j++) {
                         stop = locations[0][i][j][k] == null;
-                        if(stop){
+                        if (stop) {
                             break;
                         }
                         if (j < locations[0][i].length - 1) {
@@ -247,7 +247,7 @@ public class ExperimentTwoDimensional implements Experiment {
                         }
                     }
                 }
-                if(stop){
+                if (stop) {
                     break;
                 }
                 writer.println();
