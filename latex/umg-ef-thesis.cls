@@ -36,18 +36,18 @@
 \ProvidesClass{umg-ef-thesis}
 \LoadClass[a4paper,twoside,openright,12pt]{report}
 
-\newcommand{\@myAuthor}{imie/imiona nazwisko}
-\newcommand{\@myTitle}{tytuł pracy}
-\newcommand{\@supervisor}{imię nazwisko wraz z tytułami}
-\newcommand{\@reviewer}{imię nazwisko wraz z tytułami}
-\newcommand{\@studentsBook}{numer}
-\newcommand{\@acknowledgementDate}{data oświadczenia}
-\newcommand{\@examDate}{dd.mm.rr}
-\newcommand{\@specialty}{specjalność}
-\newcommand{\@superviorsGrade}{ocena}
-\newcommand{\@reviewersGrade}{ocena}
-\newcommand{\@result}{wynik}
-\newcommand{\@professorship}{nazwa katedry}
+\newcommand{\@myAuthor}{[imię/imiona nazwisko]}
+\newcommand{\@myTitle}{[tytuł pracy]}
+\newcommand{\@supervisor}{[imię nazwisko wraz z tytułami]}
+\newcommand{\@reviewer}{[imię nazwisko wraz z tytułami]}
+\newcommand{\@studentsBook}{[numer]}
+\newcommand{\@acknowledgementDate}{[data oświadczenia]}
+\newcommand{\@examDate}{[dd.mm.rr]}
+\newcommand{\@specialty}{[specjalność]}
+\newcommand{\@superviorsGrade}{[ocena]}
+\newcommand{\@reviewersGrade}{[ocena]}
+\newcommand{\@result}{[wynik]}
+\newcommand{\@professorship}{[nazwa katedry]}
 
 \DeclareOption{title}{\renewcommand{\@myTitle}{#1}}
 \DeclareOption{author}{\renewcommand{\@myAuthor}{#1}}
