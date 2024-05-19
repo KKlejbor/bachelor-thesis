@@ -77,6 +77,7 @@
 \RequirePackage[T1]{fontenc}
 \RequirePackage{tabularx}
 \RequirePackage{soul}
+\RequirePackage{fancyhdr}
 
 \geometry{lmargin=35mm, rmargin=25mm, tmargin=25mm, bmargin=25mm, foot=10mm, head=10mm}
 
@@ -234,3 +235,9 @@
 
     \newpage
 }
+
+\fancyhf{}
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\pagestyle{fancyplain}
