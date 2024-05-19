@@ -69,7 +69,6 @@
 \RequirePackage[utf8]{inputenc}
 \RequirePackage{polski}
 \RequirePackage{geometry}
-\RequirePackage{times}
 \RequirePackage{mathptmx}
 \RequirePackage{graphicx}
 \RequirePackage{multirow}
@@ -77,8 +76,9 @@
 \RequirePackage[T1]{fontenc}
 \RequirePackage{tabularx}
 \RequirePackage{soul}
+\RequirePackage{fancyhdr}
 
-\geometry{lmargin=35mm, rmargin=25mm, tmargin=25mm, bmargin=25mm, foot=10mm, head=10mm}
+\geometry{lmargin=25mm, rmargin=25mm, tmargin=25mm, bmargin=25mm, foot=10mm, head=10mm, bindingoffset=10mm}
 
 \frenchspacing
 
@@ -234,3 +234,9 @@
 
     \newpage
 }
+
+\fancyhf{}
+\fancyfoot[R]{\footnotesize\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\pagestyle{fancyplain}
