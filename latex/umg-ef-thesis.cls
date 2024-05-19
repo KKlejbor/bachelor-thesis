@@ -237,7 +237,7 @@
 }
 
 \fancyhf{}
-\fancyfoot[R]{\thepage}
+\fancyfoot[R]{\footnotesize\thepage}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
 \pagestyle{fancyplain}
