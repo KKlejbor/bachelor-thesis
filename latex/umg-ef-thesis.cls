@@ -69,7 +69,6 @@
 \RequirePackage[utf8]{inputenc}
 \RequirePackage{polski}
 \RequirePackage{geometry}
-\RequirePackage{times}
 \RequirePackage{mathptmx}
 \RequirePackage{graphicx}
 \RequirePackage{multirow}
