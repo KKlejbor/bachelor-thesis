@@ -79,7 +79,7 @@
 \RequirePackage{soul}
 \RequirePackage{fancyhdr}
 
-\geometry{lmargin=35mm, rmargin=25mm, tmargin=25mm, bmargin=25mm, foot=10mm, head=10mm}
+\geometry{lmargin=25mm, rmargin=25mm, tmargin=25mm, bmargin=25mm, foot=10mm, head=10mm, bindingoffset=10mm}
 
 \frenchspacing
 
