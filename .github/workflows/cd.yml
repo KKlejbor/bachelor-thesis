@@ -57,8 +57,8 @@ jobs:
         needs: [build_diff_document, build_latex]
         runs-on: ubuntu-latest
         steps:
-            # - name: Checkout
-            #   uses: actions/checkout@v4.1.1
+            - name: Checkout
+              uses: actions/checkout@v4.1.1
             # - name: Install latexdiff
             #   run: sudo apt-get install -y latexdiff
             - name: Download all artifacts
