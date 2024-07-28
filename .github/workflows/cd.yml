@@ -32,7 +32,7 @@ jobs:
             - name: debug
               run: ls latex
             - name: debug
-              run: ls latex
+              run: ls
 
     build_latex:
         # if: startsWith(github.event.pull_request.head.ref, 'latex')
