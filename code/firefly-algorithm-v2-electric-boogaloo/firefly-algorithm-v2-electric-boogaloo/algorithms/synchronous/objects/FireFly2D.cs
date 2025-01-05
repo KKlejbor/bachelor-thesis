@@ -5,6 +5,11 @@ namespace firefly_algorithm_v2_electric_boogaloo.algorithms.synchronous.objects;
 
 public record FireFly2D((double, double) Location, Func<double, double, double> ObjectiveFunction)
 {
+    public FireFly2D GetCopy()
+    {
+        return this with { Location = (Location.Item1, Location.Item2) };
+    }
+
     public double GetIntensity(bool invert = false)
     {
         return invert

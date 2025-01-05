@@ -6,6 +6,18 @@ namespace firefly_algorithm_v2_electric_boogaloo.algorithms.synchronous.objects;
 // ReSharper disable once InconsistentNaming
 public record FireflyND(double[] Location, Func<double[], double> ObjectiveFunction)
 {
+    public FireflyND GetCopy()
+    {
+        var copy = new double[Location.Length];
+
+        Location.CopyTo(copy, 0);
+
+        return this with
+        {
+            Location = copy,
+        };
+    }
+
     public double GetIntensity(bool invert = false)
     {
         return invert
