@@ -63,15 +63,15 @@ public static class Functions
         + Math.Pow(x - 1, 2) * (1 + Math.Pow(Math.Sin(3 * Math.PI * y), 2))
         + Math.Pow(y - 1, 2) * (1 + Math.Pow(Math.Sin(2 * Math.PI * y), 2));
 
-    public static Func<double, double> Negative = x => -x;
+    public static readonly Func<double, double> Negative = x => -x;
 
-    public static Func<double[], double> Rastrigin = args =>
+    public static readonly Func<double[], double> Rastrigin = args =>
         args.Aggregate(
             10D * args.Length,
             (acc, x) => acc + (Math.Pow(x, 2) - 10D * Math.Cos(2 * Math.PI * x))
         );
 
-    public static Func<double[], double> Schwefel = args =>
+    public static readonly Func<double[], double> Schwefel = args =>
     {
         var term1 = 418.9829 * args.Length;
 
