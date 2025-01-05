@@ -63,6 +63,8 @@ public static class Functions
         + Math.Pow(x - 1, 2) * (1 + Math.Pow(Math.Sin(3 * Math.PI * y), 2))
         + Math.Pow(y - 1, 2) * (1 + Math.Pow(Math.Sin(2 * Math.PI * y), 2));
 
+    public static Func<double, double> Negative = x => -x;
+
     public static Func<double[], double> Rastrigin = args =>
         args.Aggregate(
             10D * args.Length,
