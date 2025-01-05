@@ -28,6 +28,7 @@ public record Firefly(
 
     @Override
     public String toString() {
+        // Now this; this what Java is. Nightmarish clusterfuck of spaghetti code
         StringBuilder stringBuilder = new StringBuilder("f(");
 
         for (int i = 0; i < location.length - 1; i++) {
